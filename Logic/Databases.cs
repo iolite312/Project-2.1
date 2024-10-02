@@ -6,19 +6,15 @@ namespace Logic
 {
     public class Databases
     {
-        private DAO dao;
+        private LoginDAO dao;
         public Databases()
         {
-            dao = new DAO();
+            dao = new LoginDAO();
         }
 
-        public List<Databases_Model> Get_All_Databases()
+        public void Get_All_Databases()
         {
-            return dao.GetDatabases();
-        }
-        public List<Ticket> GetTickets()
-        {
-            return dao.GetTickets();
+            dao.Test();
         }
     }
 }
