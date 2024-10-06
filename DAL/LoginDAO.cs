@@ -1,6 +1,6 @@
 ﻿using Model;
+using Model.Enums;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +12,7 @@ namespace DAL
     {
         public void Test()
         {
-            List<Ticket> tickets = GetDBConnection().GetCollection<Ticket>("tickets").Find(ticket => ticket.Status == "Open").ToList();
+            List<Ticket> tickets = GetDBConnection().GetCollection<Ticket>("tickets").Find(ticket => ticket.Status == ETicketStatus.Open).ToList();
         }
     }
 }
