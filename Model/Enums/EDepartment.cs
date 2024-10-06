@@ -8,6 +8,6 @@ namespace Model.Enums
 {
     public enum EDepartment
     {
-        Sales, Engineering, Marketing, HR, Finance, Legal
+        Sales, Engineering, Marketing, HR, Finance, Legal, ITSupport
     }
 }
