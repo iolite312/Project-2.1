@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Model.Enums
 {
-    public enum EDepartment
+    public enum ETicketPriority
     {
-        Sales, Engineering, Marketing, HR, Finance, Legal, ITSupport
+        High, Medium, Low
     }
 }
