@@ -35,7 +35,7 @@ namespace Model
             Salt = salt;
             HashedPassword = hashedPassword;
             Department = department;
-            AccessToken = accessToken;
+            AccessToken = null;
         }
     }
 }
