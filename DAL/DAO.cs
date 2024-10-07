@@ -16,19 +16,14 @@ namespace DAL
             client = new MongoClient("mongodb+srv://713969:GardenGroup@gardengroup.l9fpj.mongodb.net/");
             db = client.GetDatabase("Project");
         }
-        protected IMongoDatabase GetDBConnection()
+        protected IMongoCollection<Employee> GetEmployeeCollection()
         {
-            return db;
+            return db.GetCollection<Employee>("employees");
         }
-        //public List<Ticket> GetTickets()
-        //{
-        //    // Get the "tickets" collection from the "Project" database
-        //    List<Ticket> tickets = db.GetCollection<Ticket>("tickets").Find(ticket => ticket.Status == "Open").ToList();
-
-        //    // Query all documents in the collection and retrieve them as a list
-        //     //ticketCollection;
-        //    return tickets;
-        //}
+        protected IMongoCollection<Ticket> GetTicketCollection()
+        {
+            return db.GetCollection<Ticket>("tickets");
+        }
     }
 
 
