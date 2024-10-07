@@ -12,7 +12,7 @@ namespace DAL
     {
         public void Test()
         {
-            List<Ticket> tickets = GetDBConnection().GetCollection<Ticket>("tickets").Find(ticket => ticket.Status == ETicketStatus.Open).ToList();
+            List<Ticket> tickets = GetTicketCollection().Find(ticket => ticket.Status == ETicketStatus.Open).ToList();
         }
     }
 }
