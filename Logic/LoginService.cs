@@ -8,22 +8,24 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    internal class LoginService
+    public class LoginService
     {
         LoginDAO loginDAO;
+        EncryptionService encryptionService;
         public LoginService() 
         { 
             loginDAO = new LoginDAO();
+            encryptionService = new EncryptionService();
         }
 
+        // Check the login
         public Employee checkLogin(string username, string password)
         {
             try
             {
-                loginDao.GetPassWordbyID(username);
-                string encryptedPassword = EncryptPassword(password);
-                Employee employee = loginDao.GetPassWordbyID(username);
-                if (employee.password == encryptedPassword)
+                Employee employee = loginDAO.GetUserByID(username);
+                string encryptedPassword = encryptionService.EncryptPassword(password, employee.Salt);
+                if (employee.HashedPassword == encryptedPassword)
                 {
                     return employee;
                 }

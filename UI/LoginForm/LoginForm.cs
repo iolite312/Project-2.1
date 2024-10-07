@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Model;
+using Logic;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +29,17 @@ namespace UI.LoginForm
         //Click event when user clicks on login button
         private void LoginBtn_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                LoginService loginService = new LoginService();
+                Employee employee = loginService.checkLogin(GetUsername(), GetPassword());
+                if (employee == null)
+                {
+                    throw new Exception("");
+                }
+                redirect(employee);
+            }
+            catch (Exception ex) { ErrorLbl.Text = ex.Message.ToString(); }
         }
 
         //Set startup parameters like a dissabled login button and hide the error label
@@ -106,8 +118,27 @@ namespace UI.LoginForm
         //Enable the login button when a user enters a password
         private void PasswordTB_TextChanged(object sender, EventArgs e)
         {
-            if (PasswordTB.Text != null) {EnableLoginButton(); }
+            if (PasswordTB.Text != null) { EnableLoginButton(); }
             else { DisableLoginButton(); }
+        }
+
+        private void redirect(Employee employee)
+        {
+            switch (employee.Role)
+            {
+                case Model.Enums.ERole.Employee:
+                    //Go to employee form
+                    return;
+                case Model.Enums.ERole.ServiceDesk:
+                    //go to service desk form
+                    return;
+                case Model.Enums.ERole.Manager:
+                    //Go to manager form
+                    return;
+                default:
+                    // go to employee form
+                    return;
+            }
         }
     }
 }
