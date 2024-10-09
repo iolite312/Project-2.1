@@ -18,7 +18,7 @@ namespace DAL
 
         public Employee GetUserByID(string username)
         {
-            return GetDBConnection().GetCollection<Employee>("employees").Find(employee => employee.Id == username);
+            return GetDBConnection().GetCollection<Employee>("employees").findOne(employee => employee.Id == username);
         }
     }
 }
