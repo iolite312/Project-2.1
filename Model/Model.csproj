@@ -144,7 +144,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Databases_Model.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Enums\ETicketPriority.cs" />
     <Compile Include="Enums\EDepartment.cs" />
