@@ -72,6 +72,7 @@ namespace UI.TicketEditUI
             }
             else
             {
+                canceled = true;
                 Close();
             }
 
