@@ -10,9 +10,14 @@ namespace DAL
 {
     public class LoginDAO : DAO
     {
-        public void Test()
+        public Employee GetUserByID(string username)
         {
-            List<Ticket> tickets = GetTicketCollection().Find(ticket => ticket.Status == ETicketStatus.Open).ToList();
+            Employee newEmployee = (Employee)GetEmployeeCollection().Find(employee => employee.FirstName == username).FirstOrDefault();
+            if (newEmployee == null)
+            {
+                throw new Exception("Invalid username or password!");
+            }
+            return newEmployee; 
         }
     }
 }
