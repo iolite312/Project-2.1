@@ -12,18 +12,12 @@ namespace DAL
 {
     public class LoginDAO : DAO
     {
-
-        public void Test()
-        {
-            List<Ticket> tickets = GetTicketCollection().Find(ticket => ticket.Status == ETicketStatus.Open).ToList();
-        }
-
         public Employee GetUserByID(string username)
         {
             Employee newEmployee = (Employee)GetEmployeeCollection().Find(employee => employee.FirstName == username).FirstOrDefault();
             if (newEmployee == null)
             {
-                throw new Exception("Object not found!!"); //change this to wrong username or password!
+                throw new Exception("Invalid username or password!");
             }
             return newEmployee; 
         }
