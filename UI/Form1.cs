@@ -3,12 +3,12 @@ namespace UI
 {
     public partial class Form1 : Form
     {
-        Databases databases;
+        //Databases databases;
         public Form1()
         {
             InitializeComponent();
-            databases = new Databases();
-            databases.Get_All_Databases();
+           // databases = new Databases();
+           //databases.Get_All_Databases();
         }
         
     }

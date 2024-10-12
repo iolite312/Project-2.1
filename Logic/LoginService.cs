@@ -31,7 +31,7 @@ namespace Logic
                 }
                 else
                 {
-                    throw new Exception("Verkeerde gebruikersnaam of wachtwoord");
+                    throw new Exception("Invalid username or password");
                 }
             }
             catch (Exception ex) { throw new Exception(ex.Message); }

@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UI.LoginForm
+namespace UI.Login
 {
     public partial class LoginForm : Form
     {
@@ -31,15 +31,16 @@ namespace UI.LoginForm
         {
             try
             {
+                ErrorLbl.Hide();
                 LoginService loginService = new LoginService();
                 Employee employee = loginService.checkLogin(GetUsername(), GetPassword());
                 if (employee == null)
                 {
-                    throw new Exception("");
+                    throw new Exception("Invalid username or password");
                 }
                 redirect(employee);
             }
-            catch (Exception ex) { ErrorLbl.Text = ex.Message.ToString(); }
+            catch (Exception ex) { ErrorLbl.Show(); ErrorLbl.Text = ex.Message.ToString(); adjustAttempts(ex.Message.ToString()); }
         }
 
         //Set startup parameters like a dissabled login button and hide the error label
@@ -136,7 +137,8 @@ namespace UI.LoginForm
                     //Go to manager form
                     return;
                 default:
-                    // go to employee form
+                    Form1 form1 = new Form1();
+                    form1.Show();
                     return;
             }
         }

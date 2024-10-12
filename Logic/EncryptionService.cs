@@ -10,8 +10,7 @@ namespace Logic
 {
     internal class EncryptionService
     {
-        //add preexisting salt here
-        
+       
         public EncryptionService() {}
         public string EncryptPassword(string password, string salt)
         {
