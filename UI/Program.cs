@@ -1,5 +1,6 @@
 using Model;
 using Model.Enums;
+using System.Security.Policy;
 
 namespace UI
 {
@@ -11,12 +12,11 @@ namespace UI
         [STAThread]
         static void Main()
         {
-                                      // AccessToken
-
+            var newEmployee = new Employee("Luuk", "van der Berg", "Luuk.vanderBerg@gmail.com", null, ERole.Employee, null, "66eb0b6cea00799cc5ed6eeb", EDepartment.Finance, null);
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new DashboardUI.Dashboard());
+            Application.Run(new DashboardUI.Dashboard(newEmployee));
             
             
         }

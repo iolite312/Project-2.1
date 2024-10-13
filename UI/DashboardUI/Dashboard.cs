@@ -26,7 +26,7 @@ namespace UI.DashboardUI
             service = new DashboardService();
             allTickets = new List<Ticket>();
             allTickets = service.AllTickets();
-          filterTickets(employee);
+            filterTickets(employee);
             countAllTickets();
             calculateOpenTickets();
             pastDeadlineCounter();
@@ -52,7 +52,7 @@ namespace UI.DashboardUI
             foreach(Ticket ticket in allTickets)
             {
                 TimeSpan verschil = DateTime.Now - ticket.Timestamp;
-                TimeSpan deadlineSpan = TimeSpan.FromDays(ticket.Deadline*3);
+                TimeSpan deadlineSpan = TimeSpan.FromDays(ticket.Deadline);
                 if (verschil > deadlineSpan) PastDeadline++;
             }
         }
@@ -62,15 +62,13 @@ namespace UI.DashboardUI
             {List<Ticket> list = new List<Ticket>();
                 foreach (Ticket ticket in allTickets)
                 {
-                    if (employee != ticket.Employee) list.Add(ticket);//allTickets.Remove(ticket);
+                    if (employee.Email != ticket.Employee.Email) list.Add(ticket);
                 }
                 foreach(Ticket ticket in list)
                 {
                     allTickets.Remove(ticket);
                 }
             }
-          
-
         }
     }
 }
