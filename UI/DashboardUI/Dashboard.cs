@@ -26,7 +26,7 @@ namespace UI.DashboardUI
             service = new DashboardService();
             allTickets = new List<Ticket>();
             allTickets = service.AllTickets();
-            filterTickets(employee);
+          filterTickets(employee);
             countAllTickets();
             calculateOpenTickets();
             pastDeadlineCounter();
@@ -59,12 +59,18 @@ namespace UI.DashboardUI
         private void filterTickets(Employee employee)
         {
             if (employee.Role != Model.Enums.ERole.ServiceDesk)
-            {
+            {List<Ticket> list = new List<Ticket>();
                 foreach (Ticket ticket in allTickets)
                 {
-                    if(employee != ticket.Employee) allTickets.Remove(ticket);
+                    if (employee != ticket.Employee) list.Add(ticket);//allTickets.Remove(ticket);
+                }
+                foreach(Ticket ticket in list)
+                {
+                    allTickets.Remove(ticket);
                 }
             }
+          
+
         }
     }
 }
