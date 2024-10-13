@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,11 +15,10 @@ namespace UI.DashboardUI
 {
     public partial class Dashboard : Form
     {
-        Panel unresolvedPanel;
-        Panel pastDeadlinePanel;
-        
-        public Dashboard()
+        Employee Employee;
+        public Dashboard(Employee employee)
         {
+            this.Employee = employee;
             InitializeComponent();
             unresolvedIncidentsPanel(150);
             pastDeadlineIncidentsPanel(150);

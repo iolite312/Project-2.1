@@ -96,5 +96,8 @@
         private Label currentIncidentsText;
         private Label unresolvedIncidentsLabel;
         private Label pastDeadlineLabel;
+
+        Panel unresolvedPanel;
+        Panel pastDeadlinePanel;
     }
 }
