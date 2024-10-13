@@ -14,7 +14,7 @@ namespace DAL
     {
         public Employee GetUserByID(string username)
         {
-            Employee newEmployee = (Employee)GetEmployeeCollection().Find(employee => employee.FirstName == username).FirstOrDefault();
+            Employee newEmployee = GetEmployeeCollection().Find(employee => employee.FirstName == username).FirstOrDefault();
             if (newEmployee == null)
             {
                 throw new Exception("Invalid username or password!");
