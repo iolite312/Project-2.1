@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    internal class EncryptionService
+    public class EncryptionService
     {
         //Encrypts password :)
         public string EncryptPassword(string password, string salt)
@@ -25,6 +25,13 @@ namespace Logic
                 }
                 return hashString.ToString();
             }
+        }
+        public string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>?/~`";
+            Random random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+                                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
