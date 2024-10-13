@@ -14,16 +14,16 @@ namespace UI.TicketUI
 {
     public partial class TicketUI : Form
     {
-        TicketService ticketService;
+        
         public TicketUI()
         {
             InitializeComponent();
-            ticketService = new TicketService();
             InitListView();
         }
         private void InitListView()
         {
             ticketListView.Items.Clear();
+            TicketService ticketService = new TicketService();
             List<Ticket> tickets = ticketService.GetTickets();
 
             tickets = tickets.OrderBy(ticket => ticket.Status)

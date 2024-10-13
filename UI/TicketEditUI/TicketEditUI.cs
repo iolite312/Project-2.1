@@ -9,13 +9,10 @@ namespace UI.TicketEditUI
         public bool canceled = false;
         private bool isEditing = false;
         private Ticket _ticket;
-        public Ticket Ticket { get { return _ticket; } }
-        private TicketService _ticketService;
         public TicketEditUI(Ticket ticket)
         {
             InitializeComponent();
             _ticket = ticket;
-            _ticketService = new TicketService();
             InitTicket();
         }
 
@@ -93,6 +90,7 @@ namespace UI.TicketEditUI
                 DialogResult result = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
+                    TicketService _ticketService = new TicketService();
                     Ticket ticket = new Ticket(caseNameInput.Text, (ETicketType)caseTypeCombo.SelectedItem, (ETicketStatus)caseStatusCombo.SelectedItem, descriptionTextBox.Text, caseDatePickerDate.Value.Date.Add(caseDatePickerTime.Value.TimeOfDay), (ETicketPriority)casePriorityCombo.SelectedItem, _ticket.Handler, _ticket.Employee, _ticket.Deadline, _ticket.Id);
                     _ticketService.UpdateTicket(ticket);
                     Close();
