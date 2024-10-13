@@ -19,86 +19,52 @@ namespace UI.DashboardUI
         DashboardService service;
         int Opentickets;
         int AllTickets;
+        int PastDeadline;
+        List<Ticket> allTickets;
         public Dashboard(Employee employee)
         {
             service = new DashboardService();
-            GetTicketsCount(employee);
+            allTickets = new List<Ticket>();
+            allTickets = service.AllTickets();
+            filterTickets(employee);
+            countAllTickets();
+            calculateOpenTickets();
+            pastDeadlineCounter();
             InitializeComponent();
-            unresolvedIncidentsPanel(150);
-            pastDeadlineIncidentsPanel(150);
-        }
-        private void pastDeadlineIncidentsPanel(int size)
-        {
-            // Panel for past deadline incidents
-            pastDeadlinePanel = new Panel();
-            pastDeadlinePanel.Location = new Point(size + 180, 150);
-            pastDeadlinePanel.Size = new Size(size, size);
-            pastDeadlinePanel.Paint += PastDeadlinePanel_Paint;
-            this.Controls.Add(pastDeadlinePanel);
-        }
-        private void unresolvedIncidentsPanel(int size)
-        {
-            // Panel for unresolved incidents
-            unresolvedPanel = new Panel();
-            unresolvedPanel.Location = new Point(30, 150);
-            unresolvedPanel.Size = new Size(size, size);
-            unresolvedPanel.Paint += UnresolvedPanel_Paint;
-            this.Controls.Add(unresolvedPanel);
-        }
-        private void UnresolvedPanel_Paint(object sender, PaintEventArgs e)
-        {
-            DrawCircularProgressBar(e.Graphics, Opentickets, AllTickets, Color.Orange, unresolvedPanel.Width, unresolvedPanel.Height);
-        }
-        private void PastDeadlinePanel_Paint(object sender, PaintEventArgs e)
-        {
-            DrawCircularProgressBar(e.Graphics, 1, 3, Color.Red, pastDeadlinePanel.Width, pastDeadlinePanel.Height);
-        }
-        private void DrawCircularProgressBar(Graphics g, int current, int total, Color color, int width, int height)
-        {
-            // Calculate percentage
-            float percentage = (float)current / total;
-            float sweepAngle = percentage * 360;
-
-            // Draw background circle
-            g.FillEllipse(new SolidBrush(Color.LightGray), 0, 0, width, height);
-
-            // Draw progress arc
-            g.FillPie(new SolidBrush(color), 0, 0, width, height, -90, sweepAngle);
-
-            // Draw inner circle to make it look like a ring
-            int innerSize = (int)(width * 0.7);
-            g.FillEllipse(new SolidBrush(Color.White), width / 2 - innerSize / 2, height / 2 - innerSize / 2, innerSize, innerSize);
-
-            // Prepare the text to draw
-            string text = $"{current}/{total}";
-            Font font = new Font("Arial", 20, FontStyle.Bold);
-            SizeF textSize = g.MeasureString(text, font);
-
-            // Calculate the position to center the text in the inner circle
-            float textX = (width / 2) - (textSize.Width / 2);
-            float textY = (height / 2) - (textSize.Height / 2);
-
-            // Draw the text
-            g.DrawString(text, font, new SolidBrush(Color.Black), textX, textY);
-        }
+        }    
         private void showListBtn_Click(object sender, EventArgs e)
         {
 
         }
-        private void GetTicketsCount(Employee employee)
+        private void calculateOpenTickets()
         {
-            switch (employee.Role)
+            foreach (Ticket ticket in allTickets)
             {
-                case Model.Enums.ERole.Employee:
-                    break;
-                case Model.Enums.ERole.ServiceDesk:
-                    AllTickets = service.AllTicketsCount();
-                    Opentickets = service.OpenTicketsCount();
-                    break;
-                case Model.Enums.ERole.Manager:
-                    break;
+                if (ticket.Status == Model.Enums.ETicketStatus.Open) Opentickets++;
             }
-
+        }
+        private void countAllTickets()
+        {
+             AllTickets=allTickets.Count ;
+        }
+        private void pastDeadlineCounter()
+        {
+            foreach(Ticket ticket in allTickets)
+            {
+                TimeSpan verschil = DateTime.Now - ticket.Timestamp;
+                TimeSpan deadlineSpan = TimeSpan.FromDays(ticket.Deadline*3);
+                if (verschil > deadlineSpan) PastDeadline++;
+            }
+        }
+        private void filterTickets(Employee employee)
+        {
+            if (employee.Role != Model.Enums.ERole.ServiceDesk)
+            {
+                foreach (Ticket ticket in allTickets)
+                {
+                    if(employee != ticket.Employee) allTickets.Remove(ticket);
+                }
+            }
         }
     }
 }

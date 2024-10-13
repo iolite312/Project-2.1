@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,10 @@ namespace Logic
         public int AllTicketsCount()
         {
             return dashboardDAO.CountAllTickets();
+        }
+        public List<Ticket> AllTickets() 
+        {
+            return dashboardDAO.GetAllTickets();
         }
     }
 }

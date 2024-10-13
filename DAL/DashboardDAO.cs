@@ -19,9 +19,12 @@ namespace DAL
         }
         public int CountAllTickets()
         {
-            // Verkrijg de collectie van tickets
             List<Ticket> tickets = GetTicketCollection().Find(ticket => ticket.Status != null).ToList();
             return tickets.Count;
+        }
+        public List<Ticket> GetAllTickets()
+        {
+            return GetTicketCollection().Find(ticket => ticket.Status != null).ToList();
         }
     }
 }
