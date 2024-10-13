@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Logic;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,10 +16,13 @@ namespace UI.DashboardUI
 {
     public partial class Dashboard : Form
     {
-        Employee Employee;
+        DashboardService service;
+        int Opentickets;
+        int AllTickets;
         public Dashboard(Employee employee)
         {
-            this.Employee = employee;
+            service = new DashboardService();
+            GetTicketsCount(employee);
             InitializeComponent();
             unresolvedIncidentsPanel(150);
             pastDeadlineIncidentsPanel(150);
@@ -27,7 +31,7 @@ namespace UI.DashboardUI
         {
             // Panel for past deadline incidents
             pastDeadlinePanel = new Panel();
-            pastDeadlinePanel.Location = new Point(size+180, 150);
+            pastDeadlinePanel.Location = new Point(size + 180, 150);
             pastDeadlinePanel.Size = new Size(size, size);
             pastDeadlinePanel.Paint += PastDeadlinePanel_Paint;
             this.Controls.Add(pastDeadlinePanel);
@@ -43,7 +47,7 @@ namespace UI.DashboardUI
         }
         private void UnresolvedPanel_Paint(object sender, PaintEventArgs e)
         {
-            DrawCircularProgressBar(e.Graphics, 7, 15, Color.Orange, unresolvedPanel.Width, unresolvedPanel.Height);
+            DrawCircularProgressBar(e.Graphics, Opentickets, AllTickets, Color.Orange, unresolvedPanel.Width, unresolvedPanel.Height);
         }
         private void PastDeadlinePanel_Paint(object sender, PaintEventArgs e)
         {
@@ -79,6 +83,21 @@ namespace UI.DashboardUI
         }
         private void showListBtn_Click(object sender, EventArgs e)
         {
+
+        }
+        private void GetTicketsCount(Employee employee)
+        {
+            switch (employee.Role)
+            {
+                case Model.Enums.ERole.Employee:
+                    break;
+                case Model.Enums.ERole.ServiceDesk:
+                    AllTickets = service.AllTicketsCount();
+                    Opentickets = service.OpenTicketsCount();
+                    break;
+                case Model.Enums.ERole.Manager:
+                    break;
+            }
 
         }
     }
