@@ -1,7 +1,9 @@
 ﻿using Model;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -38,9 +40,17 @@ namespace DAL
         }
 
 
-        public void DeleteEmployee(string id)
+        public async Task<bool> DeleteEmployee(string id)
         {
-            GetEmployeeCollection().DeleteOne(id);
+            ObjectId objectId = new ObjectId(id);
+            FilterDefinition<Employee> filterDefinition = Builders<Employee>.Filter.Eq("_id", objectId);
+            DeleteResult result = await GetEmployeeCollection().DeleteOneAsync(filterDefinition);
+
+            if (result.DeletedCount > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
