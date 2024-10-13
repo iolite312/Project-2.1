@@ -26,8 +26,8 @@ namespace UI.TicketUI
             TicketService ticketService = new TicketService();
             List<Ticket> tickets = ticketService.GetTickets();
 
-            tickets = tickets.OrderBy(ticket => ticket.Status)
-                        .ThenBy(ticket => ticket.Deadline)
+            tickets = tickets.OrderBy(ticket => ticket.Deadline)
+                        .ThenBy(ticket => ticket.Status)
                         .ToList();
 
             foreach (Ticket ticket in tickets)
