@@ -42,6 +42,7 @@
             cbPriority = new ComboBox();
             txtDescription = new TextBox();
             txtUser = new TextBox();
+            btnSubmit = new Button();
             dateTimePickerDeadline = new DateTimePicker();
             SuspendLayout();
             // 
@@ -120,6 +121,7 @@
             // 
             // dateTimePicker
             // 
+            dateTimePicker.Enabled = false;
             dateTimePicker.Location = new Point(500, 141);
             dateTimePicker.Name = "dateTimePicker";
             dateTimePicker.Size = new Size(400, 39);
@@ -158,10 +160,21 @@
             // 
             // txtUser
             // 
+            txtUser.Enabled = false;
             txtUser.Location = new Point(500, 363);
             txtUser.Name = "txtUser";
             txtUser.Size = new Size(400, 39);
             txtUser.TabIndex = 13;
+            // 
+            // btnSubmit
+            // 
+            btnSubmit.Location = new Point(500, 805);
+            btnSubmit.Name = "btnSubmit";
+            btnSubmit.Size = new Size(400, 46);
+            btnSubmit.TabIndex = 15;
+            btnSubmit.Text = "Submit";
+            btnSubmit.UseVisualStyleBackColor = true;
+            btnSubmit.Click += btnSubmit_Click;
             // 
             // dateTimePickerDeadline
             // 
@@ -174,7 +187,8 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1027, 844);
+            ClientSize = new Size(1027, 885);
+            Controls.Add(btnSubmit);
             Controls.Add(dateTimePickerDeadline);
             Controls.Add(txtUser);
             Controls.Add(txtDescription);
@@ -213,6 +227,7 @@
         private ComboBox cbPriority;
         private TextBox txtDescription;
         private TextBox txtUser;
+        private Button btnSubmit;
         private DateTimePicker dateTimePickerDeadline;
     }
 }
