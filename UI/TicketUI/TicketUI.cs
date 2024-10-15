@@ -1,14 +1,6 @@
 ﻿using Logic;
 using Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace UI.TicketUI
 {
@@ -26,8 +18,8 @@ namespace UI.TicketUI
             TicketService ticketService = new TicketService();
             List<Ticket> tickets = ticketService.GetTickets();
 
-            tickets = tickets.OrderBy(ticket => ticket.Status)
-                        .ThenBy(ticket => ticket.Deadline)
+            tickets = tickets.OrderBy(ticket => ticket.Deadline)
+                        .ThenBy(ticket => ticket.Status)
                         .ToList();
 
             foreach (Ticket ticket in tickets)

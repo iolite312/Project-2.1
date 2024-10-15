@@ -1,6 +1,7 @@
 ﻿using DAL;
 using Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Logic
 {
@@ -33,9 +34,9 @@ namespace Logic
             ticketDAO.UpdateTicket(ticket);
         }
 
-        public void DeleteTicket(string id) 
+        public Task<bool> DeleteTicket(Ticket ticket) 
         { 
-            ticketDAO.DeleteTicket(id);
+            return ticketDAO.DeleteTicket(ticket);
         }
     }
 }
