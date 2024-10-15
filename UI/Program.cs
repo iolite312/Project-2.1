@@ -1,7 +1,4 @@
-using Model;
-using Model.Enums;
-using System.Security.Policy;
-
+using UI.Login;
 namespace UI
 {
     internal static class Program
@@ -16,9 +13,7 @@ namespace UI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new DashboardUI.Dashboard(newEmployee));
-            
-            
+            Application.Run(new LoginForm());
         }
     }
 }

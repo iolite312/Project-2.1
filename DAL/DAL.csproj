@@ -148,6 +148,7 @@
     <Compile Include="DashboardDAO.cs" />
     <Compile Include="EmployeeDAO.cs" />
     <Compile Include="LoginDAO.cs" />
+    <Compile Include="TicketDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
