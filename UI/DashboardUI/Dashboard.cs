@@ -16,47 +16,46 @@ namespace UI.DashboardUI
 {
     public partial class Dashboard : Form
     {
-        DashboardService service;
-        int Opentickets;
+        
+        
         int AllTickets;
-        int PastDeadline;
-        List<Ticket> allTickets;
+        
         public Dashboard(Employee employee)
         {
-            service = new DashboardService();
-            allTickets = new List<Ticket>();
+            List<Ticket> allTickets = new List<Ticket>(); ;
+
+            DashboardService service = new DashboardService();
             allTickets = service.AllTickets();
-            filterTickets(employee);
-            countAllTickets();
-            calculateOpenTickets();
-            pastDeadlineCounter();
-            InitializeComponent();
+            allTickets=filterTickets(employee,allTickets);
+            AllTickets=CountAllTickets(allTickets);
+            int countOfOpenTickets = CalculateStatusTickets(allTickets, Model.Enums.ETicketStatus.Open);
+            int countOfResolvedTickets = CalculateStatusTickets(allTickets, Model.Enums.ETicketStatus.Resolved);
+            int countOfClosedTickets = CalculateStatusTickets(allTickets, Model.Enums.ETicketStatus.Closed);
+            
+            InitializeComponent(countOfOpenTickets,countOfResolvedTickets,countOfClosedTickets);
         }    
         private void showListBtn_Click(object sender, EventArgs e)
         {
-
+            TicketUI.TicketUI ticketUI = new TicketUI.TicketUI();
+            ticketUI.Show();
+            this.Hide();
         }
-        private void calculateOpenTickets()
+        private int CalculateStatusTickets(List<Ticket> allTickets, Model.Enums.ETicketStatus status)
         {
+            int countOfTickets=0;
             foreach (Ticket ticket in allTickets)
             {
-                if (ticket.Status == Model.Enums.ETicketStatus.Open) Opentickets++;
+                if (ticket.Status == status) countOfTickets++;
             }
+            return countOfTickets;
         }
-        private void countAllTickets()
+
+        private int CountAllTickets(List<Ticket> allTickets)
         {
-             AllTickets=allTickets.Count ;
+             return allTickets.Count ;
         }
-        private void pastDeadlineCounter()
-        {
-            foreach(Ticket ticket in allTickets)
-            {
-                TimeSpan verschil = DateTime.Now - ticket.Timestamp;
-                TimeSpan deadlineSpan = TimeSpan.FromDays(ticket.Deadline);
-                if (verschil > deadlineSpan) PastDeadline++;
-            }
-        }
-        private void filterTickets(Employee employee)
+
+        private List<Ticket> filterTickets(Employee employee , List<Ticket> allTickets)
         {
             if (employee.Role != Model.Enums.ERole.ServiceDesk)
             {List<Ticket> list = new List<Ticket>();
@@ -69,6 +68,7 @@ namespace UI.DashboardUI
                     allTickets.Remove(ticket);
                 }
             }
+            return allTickets;
         }
     }
 }

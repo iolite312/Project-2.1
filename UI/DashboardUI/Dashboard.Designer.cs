@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private void InitializeComponent( int countOfOpenTickets ,int countOfResolvedTickets,int countOfClosedTickets)
         {
             shwoListBtn = new Button();
             currentIncidentsText = new Label();
@@ -77,9 +77,9 @@
             // 
             // Dashboard
             // 
-            OpenTicketPanel();
-            ClosedTicketsPanel();
-            ResolvedTicketPanel();
+            OpenTicketPanel(countOfOpenTickets);
+            ClosedTicketsPanel(countOfClosedTickets);
+            ResolvedTicketPanel(countOfResolvedTickets);
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(557, 350);
@@ -104,37 +104,37 @@
         Panel closedTicketsPanel;
         Panel resolvedTicketsPanel;
 
-        private void ClosedTicketsPanel()
+        private void ClosedTicketsPanel(int closedTickets)
         {
             // Panel for past deadline incidents
             closedTicketsPanel = new Panel();
             closedTicketsPanel.Location = new Point(150 + 150+30, 150);
             closedTicketsPanel.Size = new Size(150, 150);
-            closedTicketsPanel.Tag = Opentickets;
+            closedTicketsPanel.Tag = closedTickets;
             closedTicketsPanel.ForeColor = Color.Orange;
             closedTicketsPanel.Paint += CircularProgressBarMaker;
             this.Controls.Add(closedTicketsPanel);
         }
         
-        private void OpenTicketPanel()
+        private void OpenTicketPanel(int openTickets)
         {
             // Panel for unresolved incidents
             openTicketPanel = new Panel();
             openTicketPanel.Location = new Point(30, 150);
             openTicketPanel.Size = new Size(150, 150);
-            openTicketPanel.Tag = Opentickets;
+            openTicketPanel.Tag = openTickets;
             openTicketPanel.ForeColor = Color.Red;
             openTicketPanel.Paint += CircularProgressBarMaker;
             this.Controls.Add(openTicketPanel);
         }
-        private void ResolvedTicketPanel()
+        private void ResolvedTicketPanel(int resolvedTickets)
         {
             // Panel for unresolved incidents
             resolvedTicketsPanel = new Panel();
-            resolvedTicketsPanel.Location = new Point(250, 150);
+            resolvedTicketsPanel.Location = new Point(180, 150);
             resolvedTicketsPanel.Size = new Size(150, 150);
-            resolvedTicketsPanel.Tag = Opentickets;
-            resolvedTicketsPanel.ForeColor = Color.Red;
+            resolvedTicketsPanel.Tag = resolvedTickets;
+            resolvedTicketsPanel.ForeColor = Color.Green;
             resolvedTicketsPanel.Paint += CircularProgressBarMaker;
             this.Controls.Add(resolvedTicketsPanel);
         }
