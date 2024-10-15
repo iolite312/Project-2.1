@@ -77,8 +77,9 @@
             // 
             // Dashboard
             // 
-            unresolvedIncidentsPanel();
-            pastDeadlineIncidentsPanel();
+            OpenTicketPanel();
+            ClosedTicketsPanel();
+            ResolvedTicketPanel();
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(557, 350);
@@ -99,35 +100,51 @@
         private Label unresolvedIncidentsLabel;
         private Label pastDeadlineLabel;
 
-        Panel unresolvedPanel;
-        Panel pastDeadlinePanel;
+        Panel openTicketPanel;
+        Panel closedTicketsPanel;
+        Panel resolvedTicketsPanel;
 
-        private void pastDeadlineIncidentsPanel()
+        private void ClosedTicketsPanel()
         {
             // Panel for past deadline incidents
-            pastDeadlinePanel = new Panel();
-            pastDeadlinePanel.Location = new Point(150 + 180, 150);
-            pastDeadlinePanel.Size = new Size(150, 150);
-            pastDeadlinePanel.Paint += PastDeadlinePanel_Paint;
-            this.Controls.Add(pastDeadlinePanel);
+            closedTicketsPanel = new Panel();
+            closedTicketsPanel.Location = new Point(150 + 150+30, 150);
+            closedTicketsPanel.Size = new Size(150, 150);
+            closedTicketsPanel.Tag = Opentickets;
+            closedTicketsPanel.ForeColor = Color.Orange;
+            closedTicketsPanel.Paint += CircularProgressBarMaker;
+            this.Controls.Add(closedTicketsPanel);
         }
-        private void unresolvedIncidentsPanel()
+        
+        private void OpenTicketPanel()
         {
             // Panel for unresolved incidents
-            unresolvedPanel = new Panel();
-            unresolvedPanel.Location = new Point(30, 150);
-            unresolvedPanel.Size = new Size(150, 150);
-            unresolvedPanel.Paint += UnresolvedPanel_Paint;
-            this.Controls.Add(unresolvedPanel);
+            openTicketPanel = new Panel();
+            openTicketPanel.Location = new Point(30, 150);
+            openTicketPanel.Size = new Size(150, 150);
+            openTicketPanel.Tag = Opentickets;
+            openTicketPanel.ForeColor = Color.Red;
+            openTicketPanel.Paint += CircularProgressBarMaker;
+            this.Controls.Add(openTicketPanel);
         }
-        private void UnresolvedPanel_Paint(object sender, PaintEventArgs e)
+        private void ResolvedTicketPanel()
         {
-            DrawCircularProgressBar(e.Graphics, Opentickets, AllTickets, Color.Orange, unresolvedPanel.Width, unresolvedPanel.Height);
+            // Panel for unresolved incidents
+            resolvedTicketsPanel = new Panel();
+            resolvedTicketsPanel.Location = new Point(250, 150);
+            resolvedTicketsPanel.Size = new Size(150, 150);
+            resolvedTicketsPanel.Tag = Opentickets;
+            resolvedTicketsPanel.ForeColor = Color.Red;
+            resolvedTicketsPanel.Paint += CircularProgressBarMaker;
+            this.Controls.Add(resolvedTicketsPanel);
         }
-        private void PastDeadlinePanel_Paint(object sender, PaintEventArgs e)
+        private void CircularProgressBarMaker(object sender, PaintEventArgs e)
         {
-            DrawCircularProgressBar(e.Graphics, PastDeadline, Opentickets, Color.Red, pastDeadlinePanel.Width, pastDeadlinePanel.Height);
+            Panel panel = sender as Panel;
+            DrawCircularProgressBar(e.Graphics, (int)panel.Tag, AllTickets, panel.ForeColor, panel.Width, panel.Height);
         }
+       
+       
         private void DrawCircularProgressBar(Graphics g, int current, int total, Color color, int width, int height)
         {
             // Calculate percentage
