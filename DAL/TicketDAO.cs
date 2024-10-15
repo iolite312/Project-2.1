@@ -1,7 +1,9 @@
 ﻿using Model;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -39,10 +41,18 @@ namespace DAL
 
             GetTicketCollection().FindOneAndUpdate(filter, update);
         }
-        
-        public void DeleteTicket(string id)
+
+        public async Task<bool> DeleteTicket(Ticket ticket)
         {
-            GetTicketCollection().DeleteOne(id);
+            ObjectId objectId = new ObjectId(ticket.Id);
+            FilterDefinition<Ticket> filterDefinition = Builders<Ticket>.Filter.Eq("_id", objectId);
+            DeleteResult result = await GetTicketCollection().DeleteOneAsync(filterDefinition);
+
+            if (result.DeletedCount > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

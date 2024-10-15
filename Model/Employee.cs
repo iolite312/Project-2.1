@@ -27,7 +27,7 @@ namespace Model
         [BsonElement("AccessToken")]
         public string AccessToken { get; set; }
 
-        public Employee(string firstName, string lastName, string email, string phoneNumber, ERole role, string salt, string hashedPassword, EDepartment department, string accessToken) : base(firstName, lastName)
+        public Employee(string firstName, string lastName, string email, string phoneNumber, ERole role, string salt, string hashedPassword, EDepartment department, string accessToken = null, string id = null) : base(firstName, lastName, id)
         {
             Email = email;
             PhoneNumber = phoneNumber;
@@ -35,7 +35,7 @@ namespace Model
             Salt = salt;
             HashedPassword = hashedPassword;
             Department = department;
-            AccessToken = null;
+            AccessToken = accessToken;
         }
     }
 }
