@@ -24,8 +24,8 @@ namespace UI.DashboardUI
         {
             List<Ticket> allTickets = new List<Ticket>(); ;
 
-            DashboardService service = new DashboardService();
-            allTickets = service.AllTickets();
+            TicketService service = new TicketService();
+            allTickets = service.GetTickets();
             allTickets=filterTickets(employee,allTickets);
             AllTickets=CountAllTickets(allTickets);
             int countOfOpenTickets = CalculateStatusTickets(allTickets, Model.Enums.ETicketStatus.Open);
