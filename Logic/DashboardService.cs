@@ -15,14 +15,6 @@ namespace Logic
         {
             dashboardDAO = new DashboardDAO();  
         }
-        public int OpenTicketsCount()
-        {
-            return dashboardDAO.CountAllOpenTickets();
-        }
-        public int AllTicketsCount()
-        {
-            return dashboardDAO.CountAllTickets();
-        }
         public List<Ticket> AllTickets() 
         {
             return dashboardDAO.GetAllTickets();

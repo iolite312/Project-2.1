@@ -12,16 +12,6 @@ namespace DAL
 {
     public class DashboardDAO : DAO
     {
-        public int CountAllOpenTickets()
-        {
-            List<Ticket> tickets = GetTicketCollection().Find(ticket => ticket.Status == ETicketStatus.Open).ToList();
-            return tickets.Count;
-        }
-        public int CountAllTickets()
-        {
-            List<Ticket> tickets = GetTicketCollection().Find(ticket => ticket.Status != null).ToList();
-            return tickets.Count;
-        }
         public List<Ticket> GetAllTickets()
         {
             return GetTicketCollection().Find(ticket => ticket.Status != null).ToList();
