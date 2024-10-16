@@ -125,28 +125,32 @@ namespace UI.Login
 
         private void redirect(Employee employee)
         {
-            switch (employee.Role)
-            {
-                case Model.Enums.ERole.Employee:
-                    Form1 form1 = new Form1();
-                    form1.Show();
-                    //Go to employee form
-                    return;
-                case Model.Enums.ERole.ServiceDesk:
-                    Form1 form2 = new Form1();
-                    form2.Show();
-                    //go to service desk form
-                    return;
-                case Model.Enums.ERole.Manager:
-                    Form1 form3 = new Form1();
-                    form3.Show();
-                    //Go to manager form
-                    return;
-                default:
-                    Form1 form4 = new Form1();
-                    form4.Show();
-                    return;
-            }
+            DashboardUI.Dashboard dashboard = new DashboardUI.Dashboard(employee);
+            
+            dashboard.Show();
+            this.Hide();
+            //switch (employee.Role)
+            //{
+            //    case Model.Enums.ERole.Employee:
+            //        Form1 form1 = new Form1();
+            //        form1.Show();
+            //        //Go to employee form
+            //        return;
+            //    case Model.Enums.ERole.ServiceDesk:
+            //        Form1 form2 = new Form1();
+            //        form2.Show();
+            //        //go to service desk form
+            //        return;
+            //    case Model.Enums.ERole.Manager:
+            //        Form1 form3 = new Form1();
+            //        form3.Show();
+            //        //Go to manager form
+            //        return;
+            //    default:
+            //        Form1 form4 = new Form1();
+            //        form4.Show();
+            //        return;
+            //}
         }
     }
 }
