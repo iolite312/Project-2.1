@@ -71,6 +71,8 @@ namespace UI.EmployeeAddUI
                 {
                     employeeService.UpdateEmployee(updatedEmployee);
                     MessageBox.Show("Updated employee");
+                } else
+                {
                     canceled = true;
                 }
             } else
