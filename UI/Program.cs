@@ -1,8 +1,6 @@
 using UI.Login;
 namespace UI
 {
-    using CreateTicket;
-
     internal static class Program
     {
         /// <summary>
