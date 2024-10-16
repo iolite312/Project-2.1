@@ -1,6 +1,5 @@
 ﻿using Model;
 using Model.Enums;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace DAL
     {
         public Employee GetUserByID(string username)
         {
-            Employee newEmployee = GetEmployeeCollection().Find(employee => employee.FirstName == username).FirstOrDefault();
+            Employee newEmployee = (Employee)GetEmployeeCollection().Find(employee => employee.FirstName == username).FirstOrDefault();
             if (newEmployee == null)
             {
                 throw new Exception("Invalid username or password!");
