@@ -37,19 +37,5 @@ namespace Model
 
         [BsonElement("Deadline")]
         public int Deadline { get; set; }
-
-        public Ticket(string caseName, ETicketType type, ETicketStatus status, string description, DateTime timestamp, ETicketPriority priority, Handler handler, Employee employee, int deadline, string id = null)
-        {
-            Id = id;
-            CaseName = caseName;
-            Type = type;
-            Status = status;
-            Description = description;
-            Timestamp = timestamp;
-            Priority = priority;
-            Handler = handler;
-            Employee = employee;
-            Deadline = deadline;
-        }
     }
 }
