@@ -11,9 +11,9 @@ namespace DAL
 {
     public class LoginDAO : DAO
     {
-        public Employee GetUserByID(string username)
+        public Employee GetUserByEmail(string email)
         {
-            Employee newEmployee = (Employee)GetEmployeeCollection().Find(employee => employee.FirstName == username).FirstOrDefault();
+            Employee newEmployee = GetEmployeeCollection().Find(employee => employee.Email == email).FirstOrDefault();
             if (newEmployee == null)
             {
                 throw new Exception("Invalid username or password!");
