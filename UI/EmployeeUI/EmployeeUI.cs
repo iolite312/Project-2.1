@@ -69,7 +69,7 @@ namespace UI.EmployeeUI
             DialogResult result = MessageBox.Show("Are you sure you want to proceed? (This action is irreversible)", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                bool deletionResult = _employeeService.DeleteEmployee(employee.Id).Result;
+                bool deletionResult = _employeeService.DeleteEmployee(employee).Result;
                 if (deletionResult)
                 {
                     MessageBox.Show("Deletion was succesful");
