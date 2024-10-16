@@ -1,0 +1,183 @@
+﻿namespace UI.DashboardUI
+{
+    partial class Dashboard
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent( int countOfOpenTickets ,int countOfResolvedTickets,int countOfClosedTickets)
+        {
+            shwoListBtn = new Button();
+            currentIncidentsText = new Label();
+            openTicketsLabel = new Label();
+            closedTicketsLabel = new Label();
+            resolvedTicketsLabel = new Label();
+            SuspendLayout();
+            // 
+            // shwoListBtn
+            // 
+            shwoListBtn.BackColor = SystemColors.ActiveCaption;
+            shwoListBtn.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            shwoListBtn.Location = new Point(367, 44);
+            shwoListBtn.Margin = new Padding(0);
+            shwoListBtn.Name = "shwoListBtn";
+            shwoListBtn.Size = new Size(150, 50);
+            shwoListBtn.TabIndex = 0;
+            shwoListBtn.Text = "SHOW LIST";
+            shwoListBtn.UseVisualStyleBackColor = false;
+            shwoListBtn.Click += showListBtn_Click;
+            // 
+            // currentIncidentsText
+            // 
+            currentIncidentsText.AutoSize = true;
+            currentIncidentsText.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            currentIncidentsText.Location = new Point(12, 54);
+            currentIncidentsText.Name = "currentIncidentsText";
+            currentIncidentsText.Size = new Size(183, 30);
+            currentIncidentsText.TabIndex = 1;
+            currentIncidentsText.Text = "Current Incidents";
+            // 
+            // openTicketsLabel
+            // 
+            openTicketsLabel.AutoSize = true;
+            openTicketsLabel.Location = new Point(60, 117);
+            openTicketsLabel.Name = "openTicketsLabel";
+            openTicketsLabel.Size = new Size(50, 15);
+            openTicketsLabel.TabIndex = 2;
+            openTicketsLabel.Text = "Open Tickets";
+            // 
+            // closedTicketsLabel
+            // 
+            closedTicketsLabel.AutoSize = true;
+            closedTicketsLabel.Location = new Point(360, 117);
+            closedTicketsLabel.Name = "closedTicketsLabel";
+            closedTicketsLabel.Size = new Size(50, 15);
+            closedTicketsLabel.TabIndex = 3;
+            closedTicketsLabel.Text = "Closed Tickets";
+            // 
+            // resolvedTicketsLabel
+            // 
+            resolvedTicketsLabel.AutoSize = true;
+            resolvedTicketsLabel.Location = new Point(205, 117);
+            resolvedTicketsLabel.Name = "resolvedTicketsLabel";
+            resolvedTicketsLabel.Size = new Size(50, 15);
+            resolvedTicketsLabel.TabIndex = 3;
+            resolvedTicketsLabel.Text = "Resovled Tickets";
+            // 
+            // Dashboard
+            // 
+            OpenTicketPanel(countOfOpenTickets);
+            ClosedTicketsPanel(countOfClosedTickets);
+            ResolvedTicketPanel(countOfResolvedTickets);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(557, 350);
+            Controls.Add(closedTicketsLabel);
+            Controls.Add(resolvedTicketsLabel);
+            Controls.Add(openTicketsLabel);
+            Controls.Add(currentIncidentsText);
+            Controls.Add(shwoListBtn);
+            Name = "Dashboard";
+            Text = "Dashboard";
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        #endregion
+
+        private Button shwoListBtn;
+        private Label currentIncidentsText;
+        private Label resolvedTicketsLabel;
+        private Label openTicketsLabel;
+        private Label closedTicketsLabel;
+
+        Panel openTicketPanel;
+        Panel closedTicketsPanel;
+        Panel resolvedTicketsPanel;
+
+        private void ClosedTicketsPanel(int closedTickets)
+        {
+            // Panel for past deadline incidents
+            closedTicketsPanel = new Panel();
+            closedTicketsPanel.Location = new Point(150 + 150+30, 150);
+            closedTicketsPanel.Size = new Size(150, 150);
+            closedTicketsPanel.Tag = closedTickets;
+            closedTicketsPanel.ForeColor = Color.Orange;
+            closedTicketsPanel.Paint += CircularProgressBarMaker;
+            this.Controls.Add(closedTicketsPanel);
+        }
+        
+        private void OpenTicketPanel(int openTickets)
+        {
+            // Panel for unresolved incidents
+            openTicketPanel = new Panel();
+            openTicketPanel.Location = new Point(30, 150);
+            openTicketPanel.Size = new Size(150, 150);
+            openTicketPanel.Tag = openTickets;
+            openTicketPanel.ForeColor = Color.Red;
+            openTicketPanel.Paint += CircularProgressBarMaker;
+            this.Controls.Add(openTicketPanel);
+        }
+        private void ResolvedTicketPanel(int resolvedTickets)
+        {
+            // Panel for unresolved incidents
+            resolvedTicketsPanel = new Panel();
+            resolvedTicketsPanel.Location = new Point(180, 150);
+            resolvedTicketsPanel.Size = new Size(150, 150);
+            resolvedTicketsPanel.Tag = resolvedTickets;
+            resolvedTicketsPanel.ForeColor = Color.Green;
+            resolvedTicketsPanel.Paint += CircularProgressBarMaker;
+            this.Controls.Add(resolvedTicketsPanel);
+        }
+        private void CircularProgressBarMaker(object sender, PaintEventArgs e)
+        {
+            Panel panel = sender as Panel;
+            DrawCircularProgressBar(e.Graphics, (int)panel.Tag, AllTickets, panel.ForeColor, panel.Width, panel.Height);
+        }
+       
+       
+        private void DrawCircularProgressBar(Graphics g, int current, int total, Color color, int width, int height)
+        {
+            float percentage = (float)current / total;
+            float sweepAngle = percentage * 360;
+
+            g.FillEllipse(new SolidBrush(Color.LightGray), 0, 0, width, height);
+
+            g.FillPie(new SolidBrush(color), 0, 0, width, height, -90, sweepAngle);
+
+            int innerSize = (int)(width * 0.7);
+            g.FillEllipse(new SolidBrush(Color.White), width / 2 - innerSize / 2, height / 2 - innerSize / 2, innerSize, innerSize);
+
+            string text = $"{percentage*100}%";
+            
+            Font font = new Font("Arial", 20, FontStyle.Bold);
+            SizeF textSize = g.MeasureString(text, font);
+
+            float textX = (width / 2) - (textSize.Width / 2);
+            float textY = (height / 2) - (textSize.Height / 2);
+
+            g.DrawString(text, font, new SolidBrush(Color.Black), textX, textY);
+        }
+    }
+}
