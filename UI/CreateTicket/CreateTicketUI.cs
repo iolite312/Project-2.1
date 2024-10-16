@@ -7,8 +7,8 @@ namespace UI.CreateTicket
 {
     public partial class CreateTicketUI : Form
     {
-        Employee loggedEmployee;
-        TicketService ticketService;
+        private Employee loggedEmployee;
+        private TicketService ticketService;
         
         public CreateTicketUI(Employee employee)
         {
@@ -25,7 +25,7 @@ namespace UI.CreateTicket
                 txtSubject.Text, (ETicketType)cbIncident.SelectedIndex,
                 ETicketStatus.Open, txtDescription.Text,
                 dateTimePicker.Value, (ETicketPriority)cbPriority.SelectedIndex,
-                null, loggedEmployee, 
+                loggedEmployee, loggedEmployee, 
                 deadLineInDays, null
                 );
         }
