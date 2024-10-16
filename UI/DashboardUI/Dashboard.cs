@@ -20,14 +20,15 @@ namespace UI.DashboardUI
         
         
         public int AllTickets;
+        private Employee _employee;
         
         public Dashboard(Employee employee)
         {
+            _employee = employee;
             List<Ticket> allTickets = new List<Ticket>(); ;
 
             TicketService service = new TicketService();
             allTickets = service.GetTickets();
-            allTickets=filterTickets(employee,allTickets);
             AllTickets=CountAllTickets(allTickets);
             int countOfOpenTickets = CalculateStatusTickets(allTickets, ETicketStatus.Open);
             int countOfResolvedTickets = CalculateStatusTickets(allTickets, ETicketStatus.Resolved);
@@ -37,7 +38,7 @@ namespace UI.DashboardUI
         }    
         private void showListBtn_Click(object sender, EventArgs e)
         {
-            TicketUI.TicketUI ticketUI = new TicketUI.TicketUI();
+            TicketUI.TicketUI ticketUI = new TicketUI.TicketUI(_employee);
             ticketUI.Show();
             this.Hide();
         }

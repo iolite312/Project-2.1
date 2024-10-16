@@ -1,22 +1,37 @@
 ﻿using Logic;
 using Model;
+using Model.Enums;
 using System.Data;
 
 namespace UI.TicketUI
 {
     public partial class TicketUI : Form
     {
-        
+        private Employee _employee;
         public TicketUI()
         {
+            InitializeComponent();
+            InitListView();
+        }
+        public TicketUI(Employee employee)
+        {
+            _employee = employee;
             InitializeComponent();
             InitListView();
         }
         private void InitListView()
         {
             ticketListView.Items.Clear();
+            List<Ticket> tickets = new List<Ticket>();
             TicketService ticketService = new TicketService();
-            List<Ticket> tickets = ticketService.GetTickets();
+            if (_employee != null && _employee.Role == ERole.Employee)
+            {
+                tickets = ticketService.GetEmployeeTickets(_employee);
+            }
+            else
+            {
+                tickets = ticketService.GetTickets();
+            }
 
             tickets = tickets.OrderBy(ticket => ticket.Deadline)
                         .ThenBy(ticket => ticket.Status)

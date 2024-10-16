@@ -3,6 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace DAL
@@ -17,6 +18,16 @@ namespace DAL
         public List<Ticket> GetTickets()
         {
             return GetTicketCollection().Find(_ => true).ToList();
+        }
+
+        public List<Ticket> GetEmployeeTickets(Employee employee)
+        {
+            PipelineDefinition<Ticket, Ticket> filter = new BsonDocument[]
+            {
+                new BsonDocument("$match",
+                new BsonDocument("EmployeeEID._id", employee.Id))
+            };
+            return GetTicketCollection().Aggregate(filter).ToList();
         }
 
         public Ticket GetTicket(string id)
