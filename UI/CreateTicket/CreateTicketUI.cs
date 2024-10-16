@@ -1,30 +1,33 @@
 ﻿
 using Model;
 using Model.Enums;
+using Logic;
 
 namespace UI.CreateTicket
 {
     public partial class CreateTicketUI : Form
     {
-        Employee loggedEmployee = new Employee("John", "Doe", "jhondoe@gmail.com", "0612345678", ERole.Employee, null, null, EDepartment.ITSupport, null);
-        public CreateTicketUI()
+        Employee loggedEmployee;
+        TicketService ticketService;
+        
+        public CreateTicketUI(Employee employee)
         {
+            this.loggedEmployee = employee;
+            this.ticketService = new TicketService();
             InitializeComponent();
             StartConfig();
         }
 
         public Ticket CreateTicket()
         {
-            Ticket ticket = new Ticket();
-            ticket.Timestamp = dateTimePicker.Value;
-            ticket.CaseName = txtSubject.Text;
-            ticket.Type = (ETicketType)cbIncident.SelectedIndex;
-            ticket.Employee = loggedEmployee;
-            ticket.Priority = (ETicketPriority)cbIncident.SelectedIndex;
-            ticket.Deadline = dateTimePickerDeadline.Value.Day - ticket.Timestamp.Day;
-            ticket.Description = txtDescription.Text;
-
-            return ticket;
+            int deadLineInDays = dateTimePickerDeadline.Value.Day - dateTimePicker.Value.Day;
+            return new Ticket(
+                txtSubject.Text, (ETicketType)cbIncident.SelectedIndex,
+                ETicketStatus.Open, txtDescription.Text,
+                dateTimePicker.Value, (ETicketPriority)cbPriority.SelectedIndex,
+                null, loggedEmployee, 
+                deadLineInDays, null
+                );
         }
 
         private void StartConfig()
@@ -40,15 +43,22 @@ namespace UI.CreateTicket
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            if (CheckTextField(txtSubject.Text) && CheckTextField(txtDescription.Text))
-                CreateTicket();
+            try
+            {
+                if (CheckTextField(txtSubject.Text) && CheckTextField(txtDescription.Text))
+                    ticketService.CreateTicket(CreateTicket());
+
+            }
+            catch (Exception exception) { MessageBox.Show(exception.Message); }
+
+
         }
 
         private bool CheckTextField(string textField) 
         {
-            if (textField == "" || textField == null)
+            if (textField == "" || textField == null) 
                 throw new Exception("No text in field(s)!");
-            
+
             return true;
         } 
     }
