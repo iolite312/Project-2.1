@@ -1,33 +1,25 @@
 ﻿using Logic;
 using Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace UI.TicketUI
 {
     public partial class TicketUI : Form
     {
-        TicketService ticketService;
+        
         public TicketUI()
         {
             InitializeComponent();
-            ticketService = new TicketService();
             InitListView();
         }
         private void InitListView()
         {
             ticketListView.Items.Clear();
+            TicketService ticketService = new TicketService();
             List<Ticket> tickets = ticketService.GetTickets();
 
-            tickets = tickets.OrderBy(ticket => ticket.Status)
-                        .ThenBy(ticket => ticket.Deadline)
+            tickets = tickets.OrderBy(ticket => ticket.Deadline)
+                        .ThenBy(ticket => ticket.Status)
                         .ToList();
 
             foreach (Ticket ticket in tickets)
