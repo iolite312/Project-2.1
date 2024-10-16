@@ -10,8 +10,8 @@ namespace Logic
 {
     public class LoginService
     {
-        LoginDAO loginDAO;
-        EncryptionService encryptionService;
+        private LoginDAO loginDAO;
+        private EncryptionService encryptionService;
         public LoginService() 
         { 
             loginDAO = new LoginDAO();
