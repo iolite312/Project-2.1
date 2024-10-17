@@ -33,7 +33,7 @@
             UsernameLbl = new Label();
             PasswordLbl = new Label();
             PasswordTB = new TextBox();
-            UsernameTB = new TextBox();
+            EmailTB = new TextBox();
             RememberMeCB = new CheckBox();
             ForgotLoginLLBL = new LinkLabel();
             LoginBtn = new Button();
@@ -94,14 +94,14 @@
             PasswordTB.TabIndex = 2;
             PasswordTB.TextChanged += PasswordTB_TextChanged;
             // 
-            // UsernameTB
+            // EmailTB
             // 
-            UsernameTB.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            UsernameTB.Location = new Point(46, 252);
-            UsernameTB.Margin = new Padding(4, 5, 4, 5);
-            UsernameTB.Name = "UsernameTB";
-            UsernameTB.Size = new Size(324, 45);
-            UsernameTB.TabIndex = 1;
+            EmailTB.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            EmailTB.Location = new Point(46, 252);
+            EmailTB.Margin = new Padding(4, 5, 4, 5);
+            EmailTB.Name = "UsernameTB";
+            EmailTB.Size = new Size(324, 45);
+            EmailTB.TabIndex = 1;
             // 
             // RememberMeCB
             // 
@@ -162,7 +162,7 @@
             Controls.Add(LoginBtn);
             Controls.Add(ForgotLoginLLBL);
             Controls.Add(RememberMeCB);
-            Controls.Add(UsernameTB);
+            Controls.Add(EmailTB);
             Controls.Add(PasswordTB);
             Controls.Add(PasswordLbl);
             Controls.Add(UsernameLbl);
@@ -182,7 +182,7 @@
         private Label UsernameLbl;
         private Label PasswordLbl;
         private TextBox PasswordTB;
-        private TextBox UsernameTB;
+        private TextBox EmailTB;
         private CheckBox RememberMeCB;
         private LinkLabel ForgotLoginLLBL;
         private Button LoginBtn;

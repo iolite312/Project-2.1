@@ -19,11 +19,11 @@ namespace Logic
         }
 
         // Check the login
-        public Employee checkLogin(string username, string password)
+        public Employee checkLogin(string email, string password)
         {
             try
             {
-                Employee employee = loginDAO.GetUserByID(username);
+                Employee employee = loginDAO.GetUserByEmail(email);
                 string encryptedPassword = encryptionService.EncryptPassword(password, employee.Salt);
                 if (employee.HashedPassword == encryptedPassword)
                 {

@@ -33,7 +33,7 @@ namespace UI.Login
             {
                 ErrorLbl.Hide();
                 LoginService loginService = new LoginService();
-                Employee employee = loginService.checkLogin(GetUsername(), GetPassword());
+                Employee employee = loginService.checkLogin(GetEmail(), GetPassword());
                 if (employee == null)
                 {
                     throw new Exception("Invalid username or password");
@@ -54,9 +54,9 @@ namespace UI.Login
 
         //Returns username
 
-        private string GetUsername()
+        private string GetEmail()
         {
-            return UsernameTB.Text.ToString();
+            return EmailTB.Text.ToString();
         }
 
         //returns password
@@ -111,7 +111,7 @@ namespace UI.Login
 
         private void LockDownSystem()
         {
-            UsernameTB.Enabled = false;
+            EmailTB.Enabled = false;
             PasswordTB.Enabled = false;
             DisableLoginButton();
         }
