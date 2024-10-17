@@ -28,8 +28,15 @@ namespace UI.DashboardUI
             List<Ticket> allTickets = new List<Ticket>(); ;
 
             TicketService service = new TicketService();
-            allTickets = service.GetTickets();
-            AllTickets=CountAllTickets(allTickets);
+            if (_employee.Role == ERole.Employee)
+            {
+                allTickets = service.GetEmployeeTickets(_employee);
+            }
+            else
+            {
+                allTickets = service.GetTickets();
+            }
+            AllTickets =CountAllTickets(allTickets);
             int countOfOpenTickets = CalculateStatusTickets(allTickets, ETicketStatus.Open);
             int countOfResolvedTickets = CalculateStatusTickets(allTickets, ETicketStatus.Resolved);
             int countOfClosedTickets = CalculateStatusTickets(allTickets, ETicketStatus.Closed);

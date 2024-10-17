@@ -96,12 +96,12 @@
             // 
             // EmailTB
             // 
-            UsernameTB.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            UsernameTB.Location = new Point(46, 252);
-            UsernameTB.Margin = new Padding(4, 5, 4, 5);
-            UsernameTB.Name = "UsernameTB";
-            UsernameTB.Size = new Size(324, 45);
-            UsernameTB.TabIndex = 1;
+            EmailTB.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            EmailTB.Location = new Point(46, 252);
+            EmailTB.Margin = new Padding(4, 5, 4, 5);
+            EmailTB.Name = "UsernameTB";
+            EmailTB.Size = new Size(324, 45);
+            EmailTB.TabIndex = 1;
             // 
             // RememberMeCB
             // 
