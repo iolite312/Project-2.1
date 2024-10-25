@@ -17,7 +17,15 @@ namespace DAL
 
         public List<Ticket> GetTickets()
         {
-            return GetTicketCollection().Find(_ => true).ToList();
+            PipelineDefinition<Ticket, Ticket> filter = new BsonDocument[] {
+                new BsonDocument("$sort",
+                new BsonDocument
+                    {
+                        { "Deadline", 1 },
+                        { "Status", 1 }
+                    })
+            };
+            return GetTicketCollection().Aggregate(filter).ToList();
         }
 
         public List<Ticket> GetEmployeeTickets(Employee employee)

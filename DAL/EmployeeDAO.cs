@@ -4,6 +4,9 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Model.Enums;
+using System;
+using System.Net.Sockets;
 
 namespace DAL
 {
@@ -16,7 +19,16 @@ namespace DAL
 
         public List<Employee> GetEmployees()
         {
-            return GetEmployeeCollection().Find(_ => true).ToList();
+            PipelineDefinition<Employee, Employee> filter = new BsonDocument[]
+            {
+                new BsonDocument("$sort",
+                new BsonDocument
+                    {
+                        { "Department", 1 },
+                        { "LastName", 1 }
+                    })
+            };
+            return GetEmployeeCollection().Aggregate(filter).ToList();
         }
 
         public Employee GetEmployee(string id)
@@ -29,6 +41,8 @@ namespace DAL
             FilterDefinition<Employee> filter = Builders<Employee>.Filter.Eq(e => e.Id, employee.Id);
 
             UpdateDefinition<Employee> updateDefinition = Builders<Employee>.Update
+                .Set(e => e.FirstName, employee.FirstName)
+                .Set(e => e.LastName, employee.LastName)
                 .Set(e => e.Email, employee.Email)
                 .Set(e => e.PhoneNumber, employee.PhoneNumber)
                 .Set(e => e.Role, employee.Role)
@@ -37,6 +51,37 @@ namespace DAL
                 .Set(e => e.Department, employee.Department);
 
             GetEmployeeCollection().FindOneAndUpdate(filter, updateDefinition);
+
+            FilterDefinition<Ticket> ticketdef = Builders<Ticket>.Filter.Eq("EmployeeEID._id", employee.Id);
+
+            PipelineDefinition<Ticket, Ticket> pipelineDefinition = new BsonDocument[]
+            {
+                new BsonDocument("$set",
+                new BsonDocument
+                    {
+                        { "EmployeeEID.FirstName", employee.FirstName },
+                        { "EmployeeEID.LastName", employee.LastName },
+                        { "EmployeeEID.Email", employee.Email },
+                        { "EmployeeEID.Role", employee.Role },
+                        { "EmployeeEID.Department", employee.Department }
+                    })
+            };
+
+            if (employee.Role == ERole.ServiceDesk)
+            {
+                ticketdef = Builders<Ticket>.Filter.Eq("HandlerEID._id", employee.Id);
+                pipelineDefinition = new BsonDocument[]
+                {
+                    new BsonDocument("$set",
+                    new BsonDocument
+                        {
+                            { "HandlerEID.FirstName", employee.FirstName },
+                            { "HandlerEID.LastName", employee.LastName },
+                        })
+                };
+            }
+
+            GetTicketCollection().UpdateMany(ticketdef, pipelineDefinition);
         }
 
 

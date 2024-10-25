@@ -27,10 +27,6 @@ namespace UI.EmployeeUI
             employeeListView.Items.Clear();
             List<Employee> employees = _employeeService.GetEmployees();
 
-            employees = employees.OrderBy(employee => employee.Department)
-                        .ThenBy(employee => employee.LastName)
-                        .ToList();
-
             foreach (Employee employee in employees)
             {
                 ListViewItem item = new ListViewItem($"{employee.FirstName} {employee.LastName}");

@@ -33,10 +33,6 @@ namespace UI.TicketUI
                 tickets = ticketService.GetTickets();
             }
 
-            tickets = tickets.OrderBy(ticket => ticket.Deadline)
-                        .ThenBy(ticket => ticket.Status)
-                        .ToList();
-
             foreach (Ticket ticket in tickets)
             {
                 ListViewItem item = new ListViewItem(ticket.CaseName);
