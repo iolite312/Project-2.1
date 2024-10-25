@@ -28,12 +28,12 @@ namespace DAL
             return GetTicketCollection().Aggregate(filter).ToList();
         }
 
-        public List<Ticket> GetEmployeeTickets(Employee employee)
+        public List<Ticket> GetEmployeeTickets(string id)
         {
             PipelineDefinition<Ticket, Ticket> filter = new BsonDocument[]
             {
                 new BsonDocument("$match",
-                new BsonDocument("EmployeeEID._id", employee.Id))
+                new BsonDocument("EmployeeEID._id", id))
             };
             return GetTicketCollection().Aggregate(filter).ToList();
         }
@@ -61,9 +61,9 @@ namespace DAL
             GetTicketCollection().FindOneAndUpdate(filter, update);
         }
 
-        public async Task<bool> DeleteTicket(Ticket ticket)
+        public async Task<bool> DeleteTicket(string id)
         {
-            ObjectId objectId = new ObjectId(ticket.Id);
+            ObjectId objectId = new ObjectId(id);
             FilterDefinition<Ticket> filterDefinition = Builders<Ticket>.Filter.Eq("_id", objectId);
             DeleteResult result = await GetTicketCollection().DeleteOneAsync(filterDefinition);
 

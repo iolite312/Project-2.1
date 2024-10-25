@@ -24,9 +24,9 @@ namespace Logic
             return ticketDAO.GetTickets();
         }
 
-        public List<Ticket> GetEmployeeTickets(Employee employee)
+        public List<Ticket> GetEmployeeTickets(string id)
         {
-            return ticketDAO.GetEmployeeTickets(employee);
+            return ticketDAO.GetEmployeeTickets(id);
         }
 
         public Ticket GetTicket(string id)
@@ -39,9 +39,9 @@ namespace Logic
             ticketDAO.UpdateTicket(ticket);
         }
 
-        public Task<bool> DeleteTicket(Ticket ticket) 
+        public Task<bool> DeleteTicket(string id) 
         { 
-            return ticketDAO.DeleteTicket(ticket);
+            return ticketDAO.DeleteTicket(id);
         }
     }
 }

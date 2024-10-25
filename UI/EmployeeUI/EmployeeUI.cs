@@ -65,7 +65,7 @@ namespace UI.EmployeeUI
             DialogResult result = MessageBox.Show("Are you sure you want to proceed? (This action is irreversible)", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                bool deletionResult = _employeeService.DeleteEmployee(employee).Result;
+                bool deletionResult = _employeeService.DeleteEmployee(employee.Id).Result;
                 if (deletionResult)
                 {
                     MessageBox.Show("Deletion was succesful");
@@ -80,6 +80,16 @@ namespace UI.EmployeeUI
 
         private void editEmployeeBtn_Click(object sender, EventArgs e)
         {
+            if (employeeListView.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select a Employee");
+                return;
+            }
+            if (employeeListView.SelectedItems.Count > 1)
+            {
+                MessageBox.Show("Please only select one employee");
+                return;
+            }
             EmployeeAddUI.EmployeeEditUI employeeAddUI = new EmployeeAddUI.EmployeeEditUI((Employee)employeeListView.SelectedItems[0].Tag, true);
             employeeAddUI.ShowDialog();
             if (!employeeAddUI.canceled)

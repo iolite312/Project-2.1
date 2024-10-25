@@ -85,9 +85,9 @@ namespace DAL
         }
 
 
-        public async Task<bool> DeleteEmployee(Employee employee)
+        public async Task<bool> DeleteEmployee(string id)
         {
-            ObjectId objectId = new ObjectId(employee.Id);
+            ObjectId objectId = new ObjectId(id);
             FilterDefinition<Employee> filterDefinition = Builders<Employee>.Filter.Eq("_id", objectId);
             DeleteResult result = await GetEmployeeCollection().DeleteOneAsync(filterDefinition);
 

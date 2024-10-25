@@ -30,7 +30,7 @@ namespace UI.DashboardUI
             TicketService service = new TicketService();
             if (_employee.Role == ERole.Employee)
             {
-                allTickets = service.GetEmployeeTickets(_employee);
+                allTickets = service.GetEmployeeTickets(_employee.Id);
             }
             else
             {
