@@ -26,16 +26,12 @@ namespace UI.TicketUI
             TicketService ticketService = new TicketService();
             if (_employee != null && _employee.Role == ERole.Employee)
             {
-                tickets = ticketService.GetEmployeeTickets(_employee);
+                tickets = ticketService.GetEmployeeTickets(_employee.Id);
             }
             else
             {
                 tickets = ticketService.GetTickets();
             }
-
-            tickets = tickets.OrderBy(ticket => ticket.Deadline)
-                        .ThenBy(ticket => ticket.Status)
-                        .ToList();
 
             foreach (Ticket ticket in tickets)
             {

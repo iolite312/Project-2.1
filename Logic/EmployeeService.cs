@@ -37,9 +37,9 @@ namespace Logic
             employeeDAO.UpdateEmployee(employee);
         }
 
-        public Task<bool> DeleteEmployee(Employee employee)
+        public Task<bool> DeleteEmployee(string id)
         {
-            return employeeDAO.DeleteEmployee(employee);
+            return employeeDAO.DeleteEmployee(id);
         }
     }
 }
