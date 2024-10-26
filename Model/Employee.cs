@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Model.Enums;
+using System.Text.Json.Serialization;
 
 namespace Model
 {
@@ -16,15 +17,18 @@ namespace Model
         public ERole Role { get; set; }
 
         [BsonElement("Salt")]
+        [JsonIgnore]
         public string Salt { get; set; }
 
         [BsonElement("HashedPassword")]
+        [JsonIgnore]
         public string HashedPassword { get; set; }
 
         [BsonElement("Department")]
         public EDepartment Department { get; set; }
 
         [BsonElement("AccessToken")]
+        [JsonIgnore]
         public string AccessToken { get; set; }
 
         public Employee(string firstName, string lastName, string email, string phoneNumber, ERole role, string salt, string hashedPassword, EDepartment department, string accessToken = null, string id = null) : base(firstName, lastName, id)
