@@ -1,6 +1,7 @@
 ﻿using Model;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -21,7 +22,7 @@ namespace DAL
                 new BsonDocument("$sort",
                 new BsonDocument
                     {
-                        { "Deadline", 1 },
+                        { "TimeStamp", 1 },
                         { "Status", 1 }
                     })
             };
@@ -30,17 +31,46 @@ namespace DAL
 
         public List<Ticket> GetEmployeeTickets(string id)
         {
+            // in this aggregation the $or statement is purely here for compatability sake because C# inserts models in to mongodb differently the mongodb Compass
             PipelineDefinition<Ticket, Ticket> filter = new BsonDocument[]
             {
                 new BsonDocument("$match",
-                new BsonDocument("EmployeeEID._id", id))
+                new BsonDocument("$or",
+                new BsonArray
+                        {
+                            new BsonDocument("EmployeeEID._id", id),
+                            new BsonDocument("EmployeeEID._id",
+                            new ObjectId(id))
+                        }))
+            };
+            return GetTicketCollection().Aggregate(filter).ToList();
+        }
+
+        public List<Ticket> GetHandlerTickets(string id)
+        {
+            // in this aggregation the or statement is purely here for compatability sake because C# inserts models in to mongodb differently the mongodb Compass
+            PipelineDefinition<Ticket, Ticket> filter = new BsonDocument[]
+            {
+                new BsonDocument("$match",
+                new BsonDocument("$or",
+                new BsonArray
+                        {
+                            new BsonDocument("HandlerEID._id", id),
+                            new BsonDocument("HandlerEID._id",
+                            new ObjectId(id))
+                        }))
             };
             return GetTicketCollection().Aggregate(filter).ToList();
         }
 
         public Ticket GetTicket(string id)
         {
-            return GetTicketCollection().Find(ticket => ticket.Id == id).First();
+            Ticket ticket = GetTicketCollection().Find(ticket => ticket.Id == id).FirstOrDefault();
+            if (ticket != null) 
+            { 
+                return ticket;
+            }
+            throw new ArgumentNullException("Ticket does not exist");
         }
 
         public void UpdateTicket(Ticket ticket)
