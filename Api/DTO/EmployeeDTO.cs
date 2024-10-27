@@ -7,8 +7,7 @@ namespace Api.DTO
 {
     public class EmployeeDTO
     {
-        private Employee _employee;
-        public string? Id { get; set; }
+        private Employee? _employee;
 
         public string FirstName { get; set; }
 
@@ -29,7 +28,6 @@ namespace Api.DTO
         public EmployeeDTO ConvertModel(Employee employee)
         {
             _employee = employee;
-            Id = employee.Id;
             FirstName = employee.FirstName;
             LastName = employee.LastName;
             Email = employee.Email;
