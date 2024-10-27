@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Model.Enums;
 using System;
-using System.Net.Sockets;
 
 namespace DAL
 {
