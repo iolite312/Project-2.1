@@ -11,6 +11,8 @@ namespace Model
         public string Email { get; set; }
 
         [BsonElement("PhoneNumber")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [BsonIgnoreIfNull]
         public string PhoneNumber { get; set; }
 
         [BsonElement("Role")]
@@ -18,10 +20,12 @@ namespace Model
 
         [BsonElement("Salt")]
         [JsonIgnore]
+        [BsonIgnoreIfNull]
         public string Salt { get; set; }
 
         [BsonElement("HashedPassword")]
         [JsonIgnore]
+        [BsonIgnoreIfNull]
         public string HashedPassword { get; set; }
 
         [BsonElement("Department")]
@@ -29,6 +33,7 @@ namespace Model
 
         [BsonElement("AccessToken")]
         [JsonIgnore]
+        [BsonIgnoreIfNull]
         public string AccessToken { get; set; }
 
         public Employee(string firstName, string lastName, string email, string phoneNumber, ERole role, string salt, string hashedPassword, EDepartment department, string accessToken = null, string id = null) : base(firstName, lastName, id)
@@ -38,6 +43,14 @@ namespace Model
             Role = role;
             Salt = salt;
             HashedPassword = hashedPassword;
+            Department = department;
+            AccessToken = accessToken;
+        }
+
+        public Employee(string firstName, string lastName, string email, ERole role, EDepartment department, string accessToken = null, string id = null) : base(firstName, lastName, id)
+        {
+            Email = email;
+            Role = role;
             Department = department;
             AccessToken = accessToken;
         }
