@@ -95,9 +95,14 @@ namespace DAL
         {
             ObjectId objectId = new ObjectId(id);
             FilterDefinition<Ticket> filterDefinition = Builders<Ticket>.Filter.Eq("_id", objectId);
-            DeleteResult result = await GetTicketCollection().DeleteOneAsync(filterDefinition);
+            PipelineDefinition<Ticket, Ticket> pipelineDefinition = new BsonDocument[]
+            {
+                new BsonDocument("$set",
+                new BsonDocument("Status", 2))
+            };
+            UpdateResult result = await GetTicketCollection().UpdateOneAsync(filterDefinition, pipelineDefinition);
 
-            if (result.DeletedCount > 0)
+            if (result.ModifiedCount > 0)
             {
                 return true;
             }
