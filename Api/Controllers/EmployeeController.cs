@@ -27,18 +27,13 @@ namespace Api.Controllers
         public IActionResult All()
         {
             List<Employee> list = _employeeService.GetEmployees();
-            List<EmployeeDTO> employeeDTO = new List<EmployeeDTO>();
-            foreach (Employee employee in list) 
-            {
-                employeeDTO.Add(new EmployeeDTO().ConvertModel(employee));
-            }
 
             if (list == null || list.Count == 0)
             {
                 Response.StatusCode = 404;
                 return new JsonResult(new { message = "No users exists" });
             }
-            return Ok(employeeDTO);
+            return Ok(list);
         }
 
         [HttpPost("create")]
@@ -85,7 +80,7 @@ namespace Api.Controllers
             catch (Exception)
             {
                 Response.StatusCode = 500;
-                return new JsonResult(new { message = "Your custom error message" });
+                return new JsonResult(new { message = "Internal Server Error" });
             }
         }
 
@@ -104,7 +99,7 @@ namespace Api.Controllers
                 Response.StatusCode = 404;
                 return new JsonResult(new { message = "User not found or does not exist" });
             }
-            catch (Exception ex) 
+            catch (Exception) 
             {
                 Response.StatusCode = 500;
                 return new JsonResult(new { message = "Internal Server Error" });
