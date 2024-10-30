@@ -1,4 +1,5 @@
 ﻿using Api.Identity;
+using Api.Tools;
 using Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,45 +18,24 @@ namespace Api.Controllers
         private const string jwtSecret = "ileFV2UT50Lcw2nLcpfYw8gRJHTi19asac";
         private static readonly TimeSpan tokenLifetime = TimeSpan.FromDays(1);
         private readonly LoginService _loginService;
+        private readonly TokenGenerator _tokenGenerator;
 
         public AuthController()
         {
             _loginService = new LoginService();
+            _tokenGenerator = new TokenGenerator();
         }
 
         [HttpPost("login")]
         public IActionResult Login([FromBody]IdentityData data)
         {
             Employee employee = _loginService.checkLogin(data.Email, data.Password);
-            if (employee == null) 
+            if (employee == null)
             {
                 return Unauthorized();
             }
 
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.UTF8.GetBytes(jwtSecret);
-
-            List<Claim> claims = new List<Claim> 
-            { 
-                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Iss, "www.id.gardengroup.com"),
-                new(JwtRegisteredClaimNames.Aud, "www.gardengroup.com"),
-                new(JwtRegisteredClaimNames.Sub, employee.Email),
-                new(JwtRegisteredClaimNames.Email, employee.Email),
-                new("userid", employee.Id),
-                new("rolePermissions", employee.Role.ToString()),
-            };
-
-            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.Add(tokenLifetime),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
-            };
-
-            SecurityToken token = handler.CreateToken(tokenDescriptor);
-
-            return Ok(handler.WriteToken(token));
+            return _tokenGenerator.GenerateToken(employee, jwtSecret, tokenLifetime);
 
         }
     }
