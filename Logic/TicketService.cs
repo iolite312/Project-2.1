@@ -28,6 +28,10 @@ namespace Logic
         {
             return ticketDAO.GetEmployeeTickets(id);
         }
+        public List<Ticket> GetHandlerTickets(string id)
+        {
+            return ticketDAO.GetHandlerTickets(id);
+        }
 
         public Ticket GetTicket(string id)
         {
