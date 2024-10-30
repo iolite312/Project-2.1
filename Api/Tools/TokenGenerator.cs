@@ -9,7 +9,7 @@ namespace Api.Tools
 {
     public class TokenGenerator
     {
-        public IActionResult GenerateToken(Employee employee, string jwtSecret, TimeSpan tokenLifeTime)
+        public IActionResult GenerateToken(Employee employee, string jwtSecret, TimeSpan tokenLifetime)
         {
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.UTF8.GetBytes(jwtSecret);
@@ -34,7 +34,7 @@ namespace Api.Tools
 
             SecurityToken token = handler.CreateToken(tokenDescriptor);
 
-            return Ok(handler.WriteToken(token));
+            return new OkObjectResult(handler.WriteToken(token));
         }
     }
 }
