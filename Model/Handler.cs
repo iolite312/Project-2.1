@@ -19,5 +19,12 @@ namespace Model
 
         [BsonElement("LastName")]
         public string LastName { get; set; }
+
+        public Handler(string firstName, string lastName, string id = null)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+        }
     }
 }
