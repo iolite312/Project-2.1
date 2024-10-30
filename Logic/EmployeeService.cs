@@ -17,9 +17,9 @@ namespace Logic
             employeeDAO = new EmployeeDAO();
         }
 
-        public void CreateEmployee(Employee employee)
+        public bool CreateEmployee(Employee employee)
         {
-            employeeDAO.CreateEmployee(employee);
+            return employeeDAO.CreateEmployee(employee);
         }
         
         public List<Employee> GetEmployees()

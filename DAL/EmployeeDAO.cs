@@ -6,15 +6,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Model.Enums;
 using System;
-using System.Net.Sockets;
 
 namespace DAL
 {
     public class EmployeeDAO : DAO
     {
-        public void CreateEmployee(Employee employee)
+        public bool CreateEmployee(Employee employee)
         {
+            if (GetEmployeeCollection().Find(e => e.Email == employee.Email).FirstOrDefault() != null) 
+            {
+                return false;
+            }
             GetEmployeeCollection().InsertOne(employee);
+            return true;
         }
 
         public List<Employee> GetEmployees()
@@ -33,11 +37,18 @@ namespace DAL
 
         public Employee GetEmployee(string id)
         {
-            return GetEmployeeCollection().Find(employee => employee.Id == id).First();
+            Employee em = GetEmployeeCollection().Find(employee => employee.Id == id).FirstOrDefault();
+            if (em != null)
+            {
+                return em;
+            }
+            throw new ArgumentNullException("User does not exist");
         }
 
         public void UpdateEmployee(Employee employee)
         {
+            if (GetEmployee(employee.Id) == null) { return; }
+
             FilterDefinition<Employee> filter = Builders<Employee>.Filter.Eq(e => e.Id, employee.Id);
 
             UpdateDefinition<Employee> updateDefinition = Builders<Employee>.Update
@@ -46,12 +57,14 @@ namespace DAL
                 .Set(e => e.Email, employee.Email)
                 .Set(e => e.PhoneNumber, employee.PhoneNumber)
                 .Set(e => e.Role, employee.Role)
-                .Set(e => e.Salt, employee.Salt)
-                .Set(e => e.HashedPassword, employee.HashedPassword)
                 .Set(e => e.Department, employee.Department);
 
             GetEmployeeCollection().FindOneAndUpdate(filter, updateDefinition);
+            UpdatingTickets(employee);
+        }
 
+        private void UpdatingTickets(Employee employee)
+        {
             FilterDefinition<Ticket> ticketdef = Builders<Ticket>.Filter.Eq("EmployeeEID._id", employee.Id);
 
             PipelineDefinition<Ticket, Ticket> pipelineDefinition = new BsonDocument[]
@@ -83,7 +96,6 @@ namespace DAL
 
             GetTicketCollection().UpdateMany(ticketdef, pipelineDefinition);
         }
-
 
         public async Task<bool> DeleteEmployee(string id)
         {
