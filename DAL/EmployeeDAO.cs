@@ -60,7 +60,11 @@ namespace DAL
                 .Set(e => e.Department, employee.Department);
 
             GetEmployeeCollection().FindOneAndUpdate(filter, updateDefinition);
+            UpdatingTickets(employee);
+        }
 
+        private void UpdatingTickets(Employee employee)
+        {
             FilterDefinition<Ticket> ticketdef = Builders<Ticket>.Filter.Eq("EmployeeEID._id", employee.Id);
 
             PipelineDefinition<Ticket, Ticket> pipelineDefinition = new BsonDocument[]
@@ -92,7 +96,6 @@ namespace DAL
 
             GetTicketCollection().UpdateMany(ticketdef, pipelineDefinition);
         }
-
 
         public async Task<bool> DeleteEmployee(string id)
         {
