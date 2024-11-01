@@ -35,7 +35,6 @@
             PasswordTB = new TextBox();
             EmailTB = new TextBox();
             RememberMeCB = new CheckBox();
-            ForgotLoginLLBL = new LinkLabel();
             LoginBtn = new Button();
             ErrorLbl = new Label();
             SuspendLayout();
@@ -44,19 +43,17 @@
             // 
             TitleLbl.AutoSize = true;
             TitleLbl.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
-            TitleLbl.Location = new Point(46, 15);
-            TitleLbl.Margin = new Padding(4, 0, 4, 0);
+            TitleLbl.Location = new Point(32, 9);
             TitleLbl.Name = "TitleLbl";
-            TitleLbl.Size = new Size(324, 65);
+            TitleLbl.Size = new Size(218, 45);
             TitleLbl.TabIndex = 0;
             TitleLbl.Text = "NODESK: TGG";
             // 
             // DescriptionLbl
             // 
-            DescriptionLbl.Location = new Point(46, 117);
-            DescriptionLbl.Margin = new Padding(4, 0, 4, 0);
+            DescriptionLbl.Location = new Point(32, 70);
             DescriptionLbl.Name = "DescriptionLbl";
-            DescriptionLbl.Size = new Size(334, 58);
+            DescriptionLbl.Size = new Size(234, 35);
             DescriptionLbl.TabIndex = 1;
             DescriptionLbl.Text = "Please provide login credentials to login to NoDesk for The Garden Group";
             DescriptionLbl.TextAlign = ContentAlignment.MiddleCenter;
@@ -65,10 +62,9 @@
             // 
             UsernameLbl.AutoSize = true;
             UsernameLbl.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            UsernameLbl.Location = new Point(46, 205);
-            UsernameLbl.Margin = new Padding(4, 0, 4, 0);
+            UsernameLbl.Location = new Point(32, 123);
             UsernameLbl.Name = "UsernameLbl";
-            UsernameLbl.Size = new Size(145, 40);
+            UsernameLbl.Size = new Size(97, 25);
             UsernameLbl.TabIndex = 2;
             UsernameLbl.Text = "Username";
             // 
@@ -76,55 +72,39 @@
             // 
             PasswordLbl.AutoSize = true;
             PasswordLbl.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            PasswordLbl.Location = new Point(46, 328);
-            PasswordLbl.Margin = new Padding(4, 0, 4, 0);
+            PasswordLbl.Location = new Point(32, 184);
             PasswordLbl.Name = "PasswordLbl";
-            PasswordLbl.Size = new Size(136, 40);
+            PasswordLbl.Size = new Size(91, 25);
             PasswordLbl.TabIndex = 3;
             PasswordLbl.Text = "Password";
             // 
             // PasswordTB
             // 
-            PasswordTB.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            PasswordTB.Location = new Point(46, 375);
-            PasswordTB.Margin = new Padding(4, 5, 4, 5);
+            PasswordTB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            PasswordTB.Location = new Point(32, 212);
             PasswordTB.Name = "PasswordTB";
             PasswordTB.PasswordChar = '*';
-            PasswordTB.Size = new Size(324, 45);
+            PasswordTB.Size = new Size(228, 23);
             PasswordTB.TabIndex = 2;
             PasswordTB.TextChanged += PasswordTB_TextChanged;
             // 
             // EmailTB
             // 
-            EmailTB.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            EmailTB.Location = new Point(46, 252);
-            EmailTB.Margin = new Padding(4, 5, 4, 5);
-            EmailTB.Name = "UsernameTB";
-            EmailTB.Size = new Size(324, 45);
+            EmailTB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            EmailTB.Location = new Point(32, 151);
+            EmailTB.Name = "EmailTB";
+            EmailTB.Size = new Size(228, 23);
             EmailTB.TabIndex = 1;
             // 
             // RememberMeCB
             // 
             RememberMeCB.AutoSize = true;
-            RememberMeCB.Location = new Point(46, 440);
-            RememberMeCB.Margin = new Padding(4, 5, 4, 5);
+            RememberMeCB.Location = new Point(32, 243);
             RememberMeCB.Name = "RememberMeCB";
-            RememberMeCB.Size = new Size(154, 29);
+            RememberMeCB.Size = new Size(104, 19);
             RememberMeCB.TabIndex = 4;
             RememberMeCB.Text = "Remember me";
             RememberMeCB.UseVisualStyleBackColor = true;
-            // 
-            // ForgotLoginLLBL
-            // 
-            ForgotLoginLLBL.AutoSize = true;
-            ForgotLoginLLBL.LinkColor = Color.Blue;
-            ForgotLoginLLBL.Location = new Point(209, 442);
-            ForgotLoginLLBL.Margin = new Padding(4, 0, 4, 0);
-            ForgotLoginLLBL.Name = "ForgotLoginLLBL";
-            ForgotLoginLLBL.Size = new Size(175, 25);
-            ForgotLoginLLBL.TabIndex = 5;
-            ForgotLoginLLBL.TabStop = true;
-            ForgotLoginLLBL.Text = "Forgot login details?";
             // 
             // LoginBtn
             // 
@@ -132,11 +112,10 @@
             LoginBtn.FlatStyle = FlatStyle.Flat;
             LoginBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             LoginBtn.ForeColor = Color.White;
-            LoginBtn.Location = new Point(46, 568);
-            LoginBtn.Margin = new Padding(4, 5, 4, 5);
-            LoginBtn.MinimumSize = new Size(326, 57);
+            LoginBtn.Location = new Point(32, 321);
+            LoginBtn.MinimumSize = new Size(228, 34);
             LoginBtn.Name = "LoginBtn";
-            LoginBtn.Size = new Size(326, 57);
+            LoginBtn.Size = new Size(228, 34);
             LoginBtn.TabIndex = 3;
             LoginBtn.Text = "Login";
             LoginBtn.UseVisualStyleBackColor = false;
@@ -145,22 +124,20 @@
             // ErrorLbl
             // 
             ErrorLbl.ForeColor = Color.FromArgb(192, 0, 0);
-            ErrorLbl.Location = new Point(0, 483);
-            ErrorLbl.Margin = new Padding(4, 0, 4, 0);
+            ErrorLbl.Location = new Point(0, 268);
             ErrorLbl.Name = "ErrorLbl";
-            ErrorLbl.Size = new Size(424, 75);
+            ErrorLbl.Size = new Size(297, 45);
             ErrorLbl.TabIndex = 9;
             ErrorLbl.Text = "ErrorLbl";
             ErrorLbl.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // LoginForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(424, 647);
+            ClientSize = new Size(297, 363);
             Controls.Add(ErrorLbl);
             Controls.Add(LoginBtn);
-            Controls.Add(ForgotLoginLLBL);
             Controls.Add(RememberMeCB);
             Controls.Add(EmailTB);
             Controls.Add(PasswordTB);
@@ -168,7 +145,6 @@
             Controls.Add(UsernameLbl);
             Controls.Add(DescriptionLbl);
             Controls.Add(TitleLbl);
-            Margin = new Padding(4, 5, 4, 5);
             Name = "LoginForm";
             Text = "Login";
             ResumeLayout(false);
@@ -184,7 +160,6 @@
         private TextBox PasswordTB;
         private TextBox EmailTB;
         private CheckBox RememberMeCB;
-        private LinkLabel ForgotLoginLLBL;
         private Button LoginBtn;
         private Label ErrorLbl;
     }
