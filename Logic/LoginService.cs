@@ -15,8 +15,7 @@ namespace Logic
     {
         private LoginDAO loginDAO;
         private EncryptionService encryptionService;
-        private string fileName = "RememberMe";
-        private int tokenLenght = 64;
+        
         public LoginService() 
         { 
             loginDAO = new LoginDAO();
