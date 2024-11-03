@@ -1,4 +1,4 @@
-﻿namespace UI.Login
+namespace UI.Login
 {
     partial class LoginForm
     {
@@ -147,6 +147,7 @@
             Controls.Add(TitleLbl);
             Name = "LoginForm";
             Text = "Login";
+            Shown += LoginForm_Shown;
             ResumeLayout(false);
             PerformLayout();
         }

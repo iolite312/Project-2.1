@@ -38,7 +38,7 @@ namespace UI.Login
             try
             {
                 ErrorLbl.Hide();
-                Employee employee = Login(GetEmail(),GetPassword());
+                Employee employee = Login(GetEmail(), GetPassword());
                 if (employee == null)
                 {
                     throw new Exception("Invalid username or password");
@@ -104,7 +104,7 @@ namespace UI.Login
             {
                 loginWithRememberMe();
             }
-            
+
         }
 
         //Tries to login with the details in the remember me file
@@ -127,7 +127,8 @@ namespace UI.Login
                     }
                 }
                 else { rememberMeService.DeleteFile(); }
-            }catch (Exception ex) { ShowError(ex.Message.ToString()); }
+            }
+            catch (Exception ex) { ShowError(ex.Message.ToString()); }
         }
 
 
@@ -184,6 +185,12 @@ namespace UI.Login
             DashboardUI.Dashboard dashboard = new DashboardUI.Dashboard(employee);
 
             dashboard.Show();
+            this.Hide();
+        }
+
+        private void LoginForm_Shown(object sender, EventArgs e)
+        {
+            if (!rememberMeService.CheckIfFileExists()) { return; }
             this.Hide();
         }
     }
