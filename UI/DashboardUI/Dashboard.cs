@@ -19,9 +19,11 @@ namespace UI.DashboardUI
     {
         
         
-        public int AllTickets;
+        protected int AllTickets;
         private Employee _employee;
-        
+        protected int closedTickets;
+        protected int openTickets;
+        protected int resolvedTickets;
         public Dashboard(Employee employee)
         {
             _employee = employee;
@@ -37,11 +39,10 @@ namespace UI.DashboardUI
                 allTickets = service.GetTickets();
             }
             AllTickets =CountAllTickets(allTickets);
-            int countOfOpenTickets = CalculateStatusTickets(allTickets, ETicketStatus.Open);
-            int countOfResolvedTickets = CalculateStatusTickets(allTickets, ETicketStatus.Resolved);
-            int countOfClosedTickets = CalculateStatusTickets(allTickets, ETicketStatus.Closed);
-            
-            InitializeComponent(countOfOpenTickets,countOfResolvedTickets,countOfClosedTickets);
+            openTickets = CalculateStatusTickets(allTickets, ETicketStatus.Open);
+            resolvedTickets = CalculateStatusTickets(allTickets, ETicketStatus.Resolved);
+            closedTickets = CalculateStatusTickets(allTickets, ETicketStatus.Closed);           
+            InitializeComponent();
         }    
         private void showListBtn_Click(object sender, EventArgs e)
         {

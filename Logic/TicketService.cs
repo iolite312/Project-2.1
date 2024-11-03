@@ -47,5 +47,9 @@ namespace Logic
         { 
             return ticketDAO.DeleteTicket(id);
         }
+        public List<Handler> AllHandlers()
+        {
+            return ticketDAO.GetHandlers();
+        }
     }
 }
