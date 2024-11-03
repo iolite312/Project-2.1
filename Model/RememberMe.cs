@@ -31,6 +31,8 @@ namespace Model
             TimeCreated = timeCreated;
         }
 
+        public RememberMe() { }
+
         public string GetEmail() { return Email; }
         public string GetPassword() { return Password; }
         public string GetMacAddress() {  return MacAddress; }
