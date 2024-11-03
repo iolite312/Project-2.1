@@ -26,6 +26,8 @@ namespace UI.Login
             InitializeComponent();
             maxAttempts = 3;
             InitiateStartupSequence();
+            loginService = new LoginService();
+            rememberMeService = new RememberMeService();
             RememberMeCheck();
         }
 
@@ -55,9 +57,9 @@ namespace UI.Login
             DisableLoginButton();
         }
 
+        // The login part
         private Employee Login(string Email, string Password)
         {
-            loginService = new LoginService();
             return loginService.checkLogin(Email, Password);
         }
 
@@ -108,19 +110,28 @@ namespace UI.Login
         //Tries to login with the details in the remember me file
         private void loginWithRememberMe()
         {
-            EncryptionService encryptionService = new EncryptionService();
-            RememberMe rememberMe = rememberMeService.LoadRememberMeData();
-            if (rememberMe.GetValid()) {
-                Employee employee = Login(encryptionService.Decrypt(rememberMe.GetEmail(), rememberMe.GetKey(), rememberMe.GetIV()), encryptionService.Decrypt(rememberMe.GetPassword(), rememberMe.GetKey(), rememberMe.GetIV()));
-                if (employee == null)
+            try
+            {
+                EncryptionService encryptionService = new EncryptionService();
+                RememberMe rememberMe = rememberMeService.LoadRememberMeData();
+                if (rememberMe.GetValid())
                 {
-                    throw new Exception("Invalid username or password");
+                    if (rememberMeService.CheckHardware(rememberMe))
+                    {
+                        Employee employee = Login(encryptionService.Decrypt(rememberMe.GetEmail(), rememberMe.GetKey(), rememberMe.GetIV()), encryptionService.Decrypt(rememberMe.GetPassword(), rememberMe.GetKey(), rememberMe.GetIV()));
+                        if (employee == null)
+                        {
+                            throw new Exception("Invalid username or password");
+                        }
+                        redirect(employee);
+                    }
                 }
-                redirect(employee); 
-            }
-            else { rememberMeService.DeleteFile(); }
+                else { rememberMeService.DeleteFile(); }
+            }catch (Exception ex) { ShowError(ex.Message.ToString()); }
         }
 
+
+        //Shows the error in the error label
         private void ShowError(string errorMessage)
         {
             ErrorLbl.Show(); ErrorLbl.Text = errorMessage;
@@ -143,11 +154,11 @@ namespace UI.Login
         {
             if (attempts >= maxAttempts)
             {
-                ErrorLbl.Text = message + "\n Systeem staat op slot. \n Start het systeem opnieuw op om weer te proberen.";
+                ErrorLbl.Text = message + "\n Systeem is locked. \n Restart to try again.";
             }
             else
             {
-                ErrorLbl.Text = message + $"\n {maxAttempts - attempts} pogingen over";
+                ErrorLbl.Text = message + $"\n {maxAttempts - attempts} attempts left";
             }
         }
 
