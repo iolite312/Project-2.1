@@ -17,7 +17,7 @@ namespace Logic
 {
     public class RememberMeService
     {
-        EncryptionService EncryptionService;
+        private EncryptionService EncryptionService;
         private string FileName = "RememberMeData.xml";
 
         public RememberMeService()
