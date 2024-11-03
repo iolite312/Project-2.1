@@ -188,6 +188,7 @@ namespace UI.Login
             this.Hide();
         }
 
+        //So it finally hides the form when a user is automaticly logged in :)
         private void LoginForm_Shown(object sender, EventArgs e)
         {
             if (!rememberMeService.CheckIfFileExists()) { return; }

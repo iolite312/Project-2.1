@@ -17,6 +17,8 @@ namespace Logic
             string input = password + salt;
             return Hash(input);
         }
+
+        //Generates a random string
         public string GenerateRandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>?/~`";
@@ -31,6 +33,7 @@ namespace Logic
             return Hash(data);
         }
 
+        //Hashes
         private string Hash(string input)
         {
             byte[] inputBytes = Encoding.UTF8.GetBytes(input);
@@ -86,6 +89,7 @@ namespace Logic
             }
         }
 
+        //Generates a random key for the aes encryption
         public byte[] GenerateRandomKey(int size)
         {
             byte[] key = new byte[size];
@@ -96,6 +100,7 @@ namespace Logic
             return key;
         }
 
+        //Generates a random IV for the aes encryption
         public byte[] GenerateRandomIV()
         {
             return GenerateRandomKey(16);
