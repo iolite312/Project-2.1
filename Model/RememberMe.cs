@@ -10,14 +10,14 @@ namespace Model
     [Serializable]
     public class RememberMe
     {
-        private string Email;
-        private string Password;
-        private string MacAddress;
-        private byte[] Key;
-        private string ProcessorID;
-        private byte[] IV;
-        private string DiskDriveID;
-        private DateTime TimeCreated;
+        public string Email;
+        public string Password;
+        public string MacAddress;
+        public byte[] Key;
+        public string ProcessorID;
+        public byte[] IV;
+        public string DiskDriveID;
+        public DateTime TimeCreated;
 
         public RememberMe(string email, string password, string macAddress, byte[] key, string processorID, byte[] iV, string diskDriveID, DateTime timeCreated)
         {
