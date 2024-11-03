@@ -17,36 +17,34 @@ namespace UI.DashboardUI
 {
     public partial class Dashboard : Form
     {
-        
-        
         protected int AllTickets;
         private Employee _employee;
         protected int closedTickets;
         protected int openTickets;
         protected int resolvedTickets;
+        private List<Ticket> _allTickets = new List<Ticket>();
         public Dashboard(Employee employee)
         {
             _employee = employee;
-            List<Ticket> allTickets = new List<Ticket>(); ;
 
             TicketService service = new TicketService();
             if (_employee.Role == ERole.Employee)
             {
-                allTickets = service.GetEmployeeTickets(_employee.Id);
+                _allTickets = service.GetEmployeeTickets(_employee.Id);
             }
             else
             {
-                allTickets = service.GetTickets();
+                _allTickets = service.GetTickets();
             }
-            AllTickets =CountAllTickets(allTickets);
-            openTickets = CalculateStatusTickets(allTickets, ETicketStatus.Open);
-            resolvedTickets = CalculateStatusTickets(allTickets, ETicketStatus.Resolved);
-            closedTickets = CalculateStatusTickets(allTickets, ETicketStatus.Closed);           
+            AllTickets =CountAllTickets(_allTickets);
+            openTickets = CalculateStatusTickets(_allTickets, ETicketStatus.Open);
+            resolvedTickets = CalculateStatusTickets(_allTickets, ETicketStatus.Resolved);
+            closedTickets = CalculateStatusTickets(_allTickets, ETicketStatus.Closed);           
             InitializeComponent();
         }    
         private void showListBtn_Click(object sender, EventArgs e)
         {
-            TicketUI.TicketUI ticketUI = new TicketUI.TicketUI(_employee);
+            TicketUI.TicketUI ticketUI = new TicketUI.TicketUI(_allTickets, _employee);
             ticketUI.Show();
             this.Hide();
         }
