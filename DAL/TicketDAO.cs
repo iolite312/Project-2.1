@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Enums;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -107,6 +108,12 @@ namespace DAL
                 return true;
             }
             return false;
+        }
+
+        public List<Handler> GetHandlers()
+        {
+            FilterDefinition<Employee> filter = Builders<Employee>.Filter.Eq(e => e.Role, ERole.ServiceDesk);
+            return GetEmployeeCollection().Find(filter).ToList().ConvertAll(e => (Handler)e);
         }
     }
 }

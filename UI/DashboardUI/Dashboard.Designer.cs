@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent( int countOfOpenTickets ,int countOfResolvedTickets,int countOfClosedTickets)
+        private void InitializeComponent()
         {
             shwoListBtn = new Button();
             currentIncidentsText = new Label();
@@ -87,9 +87,9 @@
             // 
             // Dashboard
             // 
-            OpenTicketPanel(countOfOpenTickets);
-            ClosedTicketsPanel(countOfClosedTickets);
-            ResolvedTicketPanel(countOfResolvedTickets);
+            OpenTicketPanel();
+            ClosedTicketsPanel();
+            ResolvedTicketPanel();
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(557, 350);
@@ -116,7 +116,7 @@
         Panel closedTicketsPanel;
         Panel resolvedTicketsPanel;
 
-        private void ClosedTicketsPanel(int closedTickets)
+        private void ClosedTicketsPanel()
         {
             // Panel for past deadline incidents
             closedTicketsPanel = new Panel();
@@ -128,7 +128,7 @@
             this.Controls.Add(closedTicketsPanel);
         }
         
-        private void OpenTicketPanel(int openTickets)
+        private void OpenTicketPanel()
         {
             // Panel for unresolved incidents
             openTicketPanel = new Panel();
@@ -139,7 +139,7 @@
             openTicketPanel.Paint += CircularProgressBarMaker;
             this.Controls.Add(openTicketPanel);
         }
-        private void ResolvedTicketPanel(int resolvedTickets)
+        private void ResolvedTicketPanel()
         {
             // Panel for unresolved incidents
             resolvedTicketsPanel = new Panel();
@@ -169,7 +169,7 @@
             int innerSize = (int)(width * 0.7);
             g.FillEllipse(new SolidBrush(Color.White), width / 2 - innerSize / 2, height / 2 - innerSize / 2, innerSize, innerSize);
 
-            string text = $"{percentage*100}%";
+            string text = $"{percentage * 100:F1}%";
             
             Font font = new Font("Arial", 20, FontStyle.Bold);
             SizeF textSize = g.MeasureString(text, font);

@@ -2,38 +2,32 @@
 using Model;
 using Model.Enums;
 using System.Data;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace UI.TicketUI
 {
     public partial class TicketUI : Form
     {
         private Employee _employee;
+        private List<Ticket> _tickets = new List<Ticket>();
+
         public TicketUI()
         {
             InitializeComponent();
             InitListView();
         }
-        public TicketUI(Employee employee)
+        public TicketUI(List<Ticket> tickets, Employee employee)
         {
-            _employee = employee;
+            _tickets = tickets;
             InitializeComponent();
             InitListView();
+            _employee = employee;
         }
         private void InitListView()
         {
             ticketListView.Items.Clear();
-            List<Ticket> tickets = new List<Ticket>();
-            TicketService ticketService = new TicketService();
-            if (_employee != null && _employee.Role == ERole.Employee)
-            {
-                tickets = ticketService.GetEmployeeTickets(_employee.Id);
-            }
-            else
-            {
-                tickets = ticketService.GetTickets();
-            }
-
-            foreach (Ticket ticket in tickets)
+            
+            foreach (Ticket ticket in _tickets)
             {
                 ListViewItem item = new ListViewItem(ticket.CaseName);
                 item.SubItems.Add(ticket.Type.ToString());
@@ -64,8 +58,21 @@ namespace UI.TicketUI
             ticketEdit.ShowDialog();
             if (!ticketEdit.canceled)
             {
-                InitListView();
+                updateAfterChange();
             }
+        }
+        private void updateAfterChange()
+        {
+            TicketService ticketService = new TicketService();
+            if (_employee != null && _employee.Role == ERole.Employee)
+            {
+                _tickets = ticketService.GetEmployeeTickets(_employee.Id);
+            }
+            else
+            {
+                _tickets = ticketService.GetTickets();
+            }
+            InitListView();
         }
     }
 }
