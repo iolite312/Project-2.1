@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.EmployeeUI;
 
 namespace UI.Login
 {
@@ -18,11 +19,16 @@ namespace UI.Login
     {
         private int attempts;
         private readonly int maxAttempts;
+        private LoginService loginService;
+        private RememberMeService rememberMeService;
         public LoginForm()
         {
             InitializeComponent();
             maxAttempts = 3;
             InitiateStartupSequence();
+            loginService = new LoginService();
+            rememberMeService = new RememberMeService();
+            RememberMeCheck();
         }
 
 
@@ -32,24 +38,29 @@ namespace UI.Login
             try
             {
                 ErrorLbl.Hide();
-                LoginService loginService = new LoginService();
-                Employee employee = loginService.checkLogin(GetEmail(), GetPassword());
+                Employee employee = Login(GetEmail(), GetPassword());
                 if (employee == null)
                 {
                     throw new Exception("Invalid username or password");
                 }
+                RememberMeOnLogin();
                 redirect(employee);
             }
-            catch (Exception ex) { ErrorLbl.Show(); ErrorLbl.Text = ex.Message.ToString(); adjustAttempts(ex.Message.ToString()); }
+            catch (Exception ex) { ShowError(ex.Message.ToString()); adjustAttempts(ex.Message.ToString()); }
         }
 
         //Set startup parameters like a dissabled login button and hide the error label
-
         private void InitiateStartupSequence()
         {
             ErrorLbl.Visible = false;
             attempts = 0;
             DisableLoginButton();
+        }
+
+        // The login part
+        private Employee Login(string Email, string Password)
+        {
+            return loginService.checkLogin(Email, Password);
         }
 
         //Returns username
@@ -60,28 +71,75 @@ namespace UI.Login
         }
 
         //returns password
-
         private string GetPassword()
         {
             return PasswordTB.Text.ToString();
         }
 
         //disable login button
-
         private void DisableLoginButton()
         {
             LoginBtn.Enabled = false;
         }
 
         //enable login button
-
         private void EnableLoginButton()
         {
             LoginBtn.Enabled = true;
         }
 
-        //adjust attempts when user enters wrong username / password
+        //check if remember me was checked previously
+        private void RememberMeOnLogin()
+        {
+            if (RememberMeCB.Checked)
+            {
+                loginService.SaveLoginDetails(GetEmail(), GetPassword());
+            }
+        }
 
+        //Check if the file for the remember me exists
+        private void RememberMeCheck()
+        {
+            if (rememberMeService.CheckIfFileExists())
+            {
+                loginWithRememberMe();
+            }
+
+        }
+
+        //Tries to login with the details in the remember me file
+        private void loginWithRememberMe()
+        {
+            try
+            {
+                EncryptionService encryptionService = new EncryptionService();
+                RememberMe rememberMe = rememberMeService.LoadRememberMeData();
+                if (rememberMe.GetValid())
+                {
+                    if (rememberMeService.CheckHardware(rememberMe))
+                    {
+                        Employee employee = Login(encryptionService.Decrypt(rememberMe.GetEmail(), rememberMe.GetKey(), rememberMe.GetIV()), encryptionService.Decrypt(rememberMe.GetPassword(), rememberMe.GetKey(), rememberMe.GetIV()));
+                        if (employee == null)
+                        {
+                            throw new Exception("Invalid username or password");
+                        }
+                        redirect(employee);
+                    }
+                }
+                else { rememberMeService.DeleteFile(); }
+            }
+            catch (Exception ex) { ShowError(ex.Message.ToString()); }
+        }
+
+
+        //Shows the error in the error label
+        private void ShowError(string errorMessage)
+        {
+            ErrorLbl.Show(); ErrorLbl.Text = errorMessage;
+        }
+
+
+        //adjust attempts when user enters wrong username / password
         private void adjustAttempts(string message)
         {
             attempts++;
@@ -89,26 +147,23 @@ namespace UI.Login
             if (attempts >= maxAttempts)
             {
                 LockDownSystem();
-
             }
         }
 
         // actually show the attempts left :)
-
         private void ShowAttempts(string message)
         {
             if (attempts >= maxAttempts)
             {
-                ErrorLbl.Text = message + "\n Systeem staat op slot. \n Start het systeem opnieuw op om weer te proberen.";
+                ErrorLbl.Text = message + "\n Systeem is locked. \n Restart to try again.";
             }
             else
             {
-                ErrorLbl.Text = message + $"\n {maxAttempts - attempts} pogingen over";
+                ErrorLbl.Text = message + $"\n {maxAttempts - attempts} attempts left";
             }
         }
 
         //Lock the system when a user has exceded the maximum amount of tries
-
         private void LockDownSystem()
         {
             EmailTB.Enabled = false;
@@ -123,34 +178,20 @@ namespace UI.Login
             else { DisableLoginButton(); }
         }
 
+
+        //Redirect the user to the dashboard
         private void redirect(Employee employee)
         {
             DashboardUI.Dashboard dashboard = new DashboardUI.Dashboard(employee);
-            
+
             dashboard.Show();
             this.Hide();
-            //switch (employee.Role)
-            //{
-            //    case Model.Enums.ERole.Employee:
-            //        Form1 form1 = new Form1();
-            //        form1.Show();
-            //        //Go to employee form
-            //        return;
-            //    case Model.Enums.ERole.ServiceDesk:
-            //        Form1 form2 = new Form1();
-            //        form2.Show();
-            //        //go to service desk form
-            //        return;
-            //    case Model.Enums.ERole.Manager:
-            //        Form1 form3 = new Form1();
-            //        form3.Show();
-            //        //Go to manager form
-            //        return;
-            //    default:
-            //        Form1 form4 = new Form1();
-            //        form4.Show();
-            //        return;
-            //}
+        }
+
+        private void LoginForm_Shown(object sender, EventArgs e)
+        {
+            if (!rememberMeService.CheckIfFileExists()) { return; }
+            this.Hide();
         }
     }
 }
