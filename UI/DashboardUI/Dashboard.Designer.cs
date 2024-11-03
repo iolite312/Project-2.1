@@ -169,7 +169,7 @@
             int innerSize = (int)(width * 0.7);
             g.FillEllipse(new SolidBrush(Color.White), width / 2 - innerSize / 2, height / 2 - innerSize / 2, innerSize, innerSize);
 
-            string text = $"{percentage*100}%";
+            string text = $"{percentage * 100:F1}%";
             
             Font font = new Font("Arial", 20, FontStyle.Bold);
             SizeF textSize = g.MeasureString(text, font);
