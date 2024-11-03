@@ -118,6 +118,7 @@ namespace Logic
             return rememberMe;
         }
 
+        //Delete the file
         public void DeleteFile()
         {
             if (File.Exists(FileName))
@@ -126,6 +127,7 @@ namespace Logic
             }
         }
 
+        //check if the file even exists
         public bool CheckIfFileExists()
         {
             if (File.Exists(FileName))
@@ -135,6 +137,7 @@ namespace Logic
             return false;
         }
 
+        //check the hardware vs the saved hardware
         public bool CheckHardware(RememberMe rememberMe)
         {
             if(rememberMe.GetProcessorID() == GetProcessorId() && rememberMe.GetDiskDriveID() == GetDiskDriveId() && rememberMe.GetMacAddress() == GetMacAddress())
