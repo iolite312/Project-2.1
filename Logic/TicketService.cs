@@ -47,5 +47,18 @@ namespace Logic
         { 
             return ticketDAO.DeleteTicket(id);
         }
+        public List<Handler> AllHandlers()
+        {
+            return ticketDAO.GetHandlers();
+        }
+
+        public List<Ticket> GetTicketsByMatchOr(List<string> keywords)
+        {
+            return ticketDAO.GetTicketsByMatchOr(keywords);
+        }
+        public List<Ticket> GetTicketsByMatchAnd(List<string> keywords)
+        {
+            return ticketDAO.GetTicketsByMatchAnd(keywords);
+        }
     }
 }

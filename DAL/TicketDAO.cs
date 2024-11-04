@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Enums;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -107,6 +108,54 @@ namespace DAL
                 return true;
             }
             return false;
+        }
+
+        public List<Handler> GetHandlers()
+        {
+            FilterDefinition<Employee> filter = Builders<Employee>.Filter.Eq(e => e.Role, ERole.ServiceDesk);
+            return GetEmployeeCollection().Find(filter).ToList().ConvertAll(e => (Handler)e);
+        }
+
+        public List<Ticket> GetTicketsByMatchAnd(List<string> keywords)
+        {
+            List<BsonDocument> tags = new List<BsonDocument>();
+            foreach (string keyword in keywords)
+            {
+                BsonRegularExpression regex = new BsonRegularExpression(keyword, "i");
+                tags.Add(new BsonDocument("CaseName", regex));
+            }
+            PipelineDefinition<Ticket, Ticket> filter = new BsonDocument[]
+            {
+                new BsonDocument( "$match", new BsonDocument("$and", new BsonArray(tags))),
+                new BsonDocument("$sort",
+                new BsonDocument
+                    {
+                        { "TimeStamp", 1 },
+                        { "Status", 1 }
+                    })
+            };
+            return GetTicketCollection().Aggregate(filter).ToList();
+        }
+        public List<Ticket> GetTicketsByMatchOr(List<string> keywords)
+        {
+            List<BsonDocument> tags = new List<BsonDocument>();
+            foreach (string keyword in keywords)
+            {
+                BsonRegularExpression regex = new BsonRegularExpression(keyword, "i");
+                tags.Add(new BsonDocument("CaseName", regex));
+                tags.Add(new BsonDocument("Description", regex));
+            }
+            PipelineDefinition<Ticket, Ticket> filter = new BsonDocument[]
+            {
+                new BsonDocument( "$match", new BsonDocument("$or", new BsonArray(tags))),
+                new BsonDocument("$sort",
+                new BsonDocument
+                    {
+                        { "TimeStamp", 1 },
+                        { "Status", 1 }
+                    })
+            };
+            return GetTicketCollection().Aggregate(filter).ToList();
         }
     }
 }

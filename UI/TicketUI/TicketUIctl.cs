@@ -1,39 +1,30 @@
 ﻿using Logic;
-using Model;
 using Model.Enums;
-using System.Data;
+using Model;
 
 namespace UI.TicketUI
 {
-    public partial class TicketUI : Form
+    public partial class TicketUIctl : UserControl
     {
         private Employee _employee;
-        public TicketUI()
+        private List<Ticket> _tickets = new List<Ticket>();
+        public TicketUIctl()
         {
             InitializeComponent();
             InitListView();
         }
-        public TicketUI(Employee employee)
+        public TicketUIctl(List<Ticket> tickets, Employee employee)
         {
-            _employee = employee;
+            _tickets = tickets;
             InitializeComponent();
             InitListView();
+            _employee = employee;
         }
         private void InitListView()
         {
             ticketListView.Items.Clear();
-            List<Ticket> tickets = new List<Ticket>();
-            TicketService ticketService = new TicketService();
-            if (_employee != null && _employee.Role == ERole.Employee)
-            {
-                tickets = ticketService.GetEmployeeTickets(_employee.Id);
-            }
-            else
-            {
-                tickets = ticketService.GetTickets();
-            }
 
-            foreach (Ticket ticket in tickets)
+            foreach (Ticket ticket in _tickets)
             {
                 ListViewItem item = new ListViewItem(ticket.CaseName);
                 item.SubItems.Add(ticket.Type.ToString());
@@ -48,14 +39,14 @@ namespace UI.TicketUI
             }
         }
 
-        private void ticketListView_DoubleClick(object sender, EventArgs e)
+        private void ticketListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (ticketListView.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Please select a ticket");
                 return;
             }
-            if (ticketListView.SelectedItems.Count > 1) 
+            if (ticketListView.SelectedItems.Count > 1)
             {
                 MessageBox.Show("Please only select one ticket");
                 return;
@@ -64,8 +55,38 @@ namespace UI.TicketUI
             ticketEdit.ShowDialog();
             if (!ticketEdit.canceled)
             {
-                InitListView();
+                updateAfterChange();
             }
+        }
+
+        private void updateAfterChange()
+        {
+            TicketService ticketService = new TicketService();
+            if (_employee != null && _employee.Role == ERole.Employee)
+            {
+                _tickets = ticketService.GetEmployeeTickets(_employee.Id);
+            }
+            else
+            {
+                _tickets = ticketService.GetTickets();
+            }
+            InitListView();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            TicketService ticketService = new TicketService();
+            List<string> keywords = txtSearch.Text.Split(' ').ToList();
+            if (chkbAndSearch.Checked)
+            {
+                _tickets = ticketService.GetTicketsByMatchAnd(keywords);
+            }
+            else
+            {
+                _tickets = ticketService.GetTicketsByMatchOr(keywords);
+            }
+
+            InitListView();
         }
     }
 }

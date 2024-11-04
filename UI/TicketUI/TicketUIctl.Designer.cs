@@ -1,13 +1,13 @@
 ﻿namespace UI.TicketUI
 {
-    partial class TicketUI
+    partial class TicketUIctl
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,10 +20,10 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -37,18 +37,21 @@
             handler = new ColumnHeader();
             employee = new ColumnHeader();
             deadline = new ColumnHeader();
+            txtSearch = new TextBox();
+            chkbAndSearch = new CheckBox();
+            btnSearch = new Button();
             SuspendLayout();
             // 
             // ticketListView
             // 
             ticketListView.Columns.AddRange(new ColumnHeader[] { caseName, type, status, timestamp, priority, handler, employee, deadline });
-            ticketListView.Location = new Point(12, 24);
+            ticketListView.Location = new Point(0, 0);
             ticketListView.Name = "ticketListView";
-            ticketListView.Size = new Size(1158, 492);
-            ticketListView.TabIndex = 0;
+            ticketListView.Size = new Size(1084, 492);
+            ticketListView.TabIndex = 1;
             ticketListView.UseCompatibleStateImageBehavior = false;
             ticketListView.View = View.Details;
-            ticketListView.DoubleClick += ticketListView_DoubleClick;
+            ticketListView.MouseDoubleClick += ticketListView_MouseDoubleClick;
             // 
             // caseName
             // 
@@ -90,14 +93,44 @@
             deadline.Text = "Deadline";
             deadline.Width = 160;
             // 
-            // TicketUI
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(12, 498);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(508, 27);
+            txtSearch.TabIndex = 1;
+            // 
+            // chkbAndSearch
+            // 
+            chkbAndSearch.AutoSize = true;
+            chkbAndSearch.Location = new Point(526, 498);
+            chkbAndSearch.Name = "chkbAndSearch";
+            chkbAndSearch.Size = new Size(205, 19);
+            chkbAndSearch.TabIndex = 2;
+            chkbAndSearch.Text = "Search case name and description";
+            chkbAndSearch.UseVisualStyleBackColor = true;
+            // 
+            // btnSearch
+            // 
+            btnSearch.Location = new Point(919, 498);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(105, 23);
+            btnSearch.TabIndex = 3;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // TicketUIctl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1182, 553);
             Controls.Add(ticketListView);
-            Name = "TicketUI";
-            Text = "TicketUI";
+            Controls.Add(txtSearch);
+            Controls.Add(chkbAndSearch);
+            Controls.Add(btnSearch);
+            Margin = new Padding(2);
+            Name = "TicketUIctl";
+            Size = new Size(1106, 553);
             ResumeLayout(false);
         }
 
@@ -112,5 +145,8 @@
         private ColumnHeader handler;
         private ColumnHeader employee;
         private ColumnHeader deadline;
+        private TextBox txtSearch;
+        private CheckBox chkbAndSearch;
+        private Button btnSearch;
     }
 }
