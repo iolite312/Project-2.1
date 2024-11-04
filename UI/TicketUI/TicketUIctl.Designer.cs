@@ -37,6 +37,9 @@
             handler = new ColumnHeader();
             employee = new ColumnHeader();
             deadline = new ColumnHeader();
+            txtSearch = new TextBox();
+            chkbAndSearch = new CheckBox();
+            btnSearch = new Button();
             SuspendLayout();
             // 
             // ticketListView
@@ -90,14 +93,44 @@
             deadline.Text = "Deadline";
             deadline.Width = 160;
             // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(12, 498);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(508, 27);
+            txtSearch.TabIndex = 1;
+            // 
+            // chkbAndSearch
+            // 
+            chkbAndSearch.AutoSize = true;
+            chkbAndSearch.Location = new Point(526, 498);
+            chkbAndSearch.Name = "chkbAndSearch";
+            chkbAndSearch.Size = new Size(205, 19);
+            chkbAndSearch.TabIndex = 2;
+            chkbAndSearch.Text = "Search case name and description";
+            chkbAndSearch.UseVisualStyleBackColor = true;
+            // 
+            // btnSearch
+            // 
+            btnSearch.Location = new Point(919, 498);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(105, 23);
+            btnSearch.TabIndex = 3;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
+            // 
             // TicketUIctl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(ticketListView);
+            Controls.Add(txtSearch);
+            Controls.Add(chkbAndSearch);
+            Controls.Add(btnSearch);
             Margin = new Padding(2);
             Name = "TicketUIctl";
-            Size = new Size(1106, 496);
+            Size = new Size(1106, 553);
             ResumeLayout(false);
         }
 
@@ -112,5 +145,8 @@
         private ColumnHeader handler;
         private ColumnHeader employee;
         private ColumnHeader deadline;
+        private TextBox txtSearch;
+        private CheckBox chkbAndSearch;
+        private Button btnSearch;
     }
 }

@@ -72,5 +72,21 @@ namespace UI.TicketUI
             }
             InitListView();
         }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            TicketService ticketService = new TicketService();
+            List<string> keywords = txtSearch.Text.Split(' ').ToList();
+            if (chkbAndSearch.Checked)
+            {
+                _tickets = ticketService.GetTicketsByMatchAnd(keywords);
+            }
+            else
+            {
+                _tickets = ticketService.GetTicketsByMatchOr(keywords);
+            }
+
+            InitListView();
+        }
     }
 }
