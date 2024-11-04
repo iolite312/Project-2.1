@@ -67,8 +67,8 @@ namespace DAL
         public Ticket GetTicket(string id)
         {
             Ticket ticket = GetTicketCollection().Find(ticket => ticket.Id == id).FirstOrDefault();
-            if (ticket != null) 
-            { 
+            if (ticket != null)
+            {
                 return ticket;
             }
             throw new ArgumentNullException("Ticket does not exist");
@@ -114,6 +114,56 @@ namespace DAL
         {
             FilterDefinition<Employee> filter = Builders<Employee>.Filter.Eq(e => e.Role, ERole.ServiceDesk);
             return GetEmployeeCollection().Find(filter).ToList().ConvertAll(e => (Handler)e);
+        }
+
+        public List<Ticket> GetTicketsByMatchAnd(List<string> keywords)
+        {
+            List<BsonDocument> tags = new List<BsonDocument>();
+
+            foreach (string keyword in keywords)
+            {
+                BsonRegularExpression regex = new BsonRegularExpression(keyword, "i");
+                tags.Add(new BsonDocument("CaseName", regex));
+            }
+
+            PipelineDefinition<Ticket, Ticket> filter = new BsonDocument[]
+            {
+                new BsonDocument( "$match", new BsonDocument("$and", new BsonArray(tags))),
+                new BsonDocument("$sort",
+                new BsonDocument
+                    {
+                        { "TimeStamp", 1 },
+                        { "Status", 1 }
+                    })
+            };
+
+            return GetTicketCollection().Aggregate(filter).ToList();
+        }
+
+        public List<Ticket> GetTicketsByMatchOr(List<string> keywords)
+        {
+            List<BsonDocument> tags = new List<BsonDocument>();
+
+            foreach (string keyword in keywords)
+            {
+                BsonRegularExpression regex = new BsonRegularExpression(keyword, "i");
+
+                tags.Add(new BsonDocument("CaseName", regex));
+                tags.Add(new BsonDocument("Description", regex));
+            }
+
+            PipelineDefinition<Ticket, Ticket> filter = new BsonDocument[]
+            {
+                new BsonDocument( "$match", new BsonDocument("$or", new BsonArray(tags))),
+                new BsonDocument("$sort",
+                new BsonDocument
+                    {
+                        { "TimeStamp", 1 },
+                        { "Status", 1 }
+                    })
+            };
+
+            return GetTicketCollection().Aggregate(filter).ToList();
         }
     }
 }

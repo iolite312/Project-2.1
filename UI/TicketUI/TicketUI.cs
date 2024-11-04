@@ -1,4 +1,5 @@
-﻿using Logic;
+﻿using DAL;
+using Logic;
 using Model;
 using Model.Enums;
 using System.Data;
@@ -26,7 +27,7 @@ namespace UI.TicketUI
         private void InitListView()
         {
             ticketListView.Items.Clear();
-            
+
             foreach (Ticket ticket in _tickets)
             {
                 ListViewItem item = new ListViewItem(ticket.CaseName);
@@ -49,7 +50,7 @@ namespace UI.TicketUI
                 MessageBox.Show("Please select a ticket");
                 return;
             }
-            if (ticketListView.SelectedItems.Count > 1) 
+            if (ticketListView.SelectedItems.Count > 1)
             {
                 MessageBox.Show("Please only select one ticket");
                 return;
@@ -72,6 +73,22 @@ namespace UI.TicketUI
             {
                 _tickets = ticketService.GetTickets();
             }
+            InitListView();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            TicketService ticketService = new TicketService();
+            List<string> keywords = txtSearch.Text.Split(' ').ToList();
+            if (chkbAndSearch.Checked) 
+            { 
+                _tickets = ticketService.GetTicketsByMatchAnd(keywords);
+            }
+            else
+            {
+                _tickets = ticketService.GetTicketsByMatchOr(keywords);
+            }
+
             InitListView();
         }
     }
