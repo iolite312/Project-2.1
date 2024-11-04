@@ -9,23 +9,28 @@ namespace UI.CreateTicket
     {
         private Employee loggedEmployee;
         private TicketService ticketService;
+        private EmployeeService employeeService;
         
         public CreateTicketUI(Employee employee)
         {
             this.loggedEmployee = employee;
             this.ticketService = new TicketService();
+            this.employeeService = new EmployeeService();
             InitializeComponent();
             StartConfig();
         }
 
         public Ticket CreateTicket()
         {
+            Random rnd = new Random();
+            List<Handler> handlers = ticketService.AllHandlers();
             int deadLineInDays = dateTimePickerDeadline.Value.Day - dateTimePicker.Value.Day;
+            
             return new Ticket(
                 txtSubject.Text, (ETicketType)cbIncident.SelectedIndex,
                 ETicketStatus.Open, txtDescription.Text,
                 dateTimePicker.Value, (ETicketPriority)cbPriority.SelectedIndex,
-                loggedEmployee, loggedEmployee, 
+                handlers[rnd.Next(0, handlers.Count - 1)], loggedEmployee,
                 deadLineInDays, null
                 );
         }
@@ -47,7 +52,8 @@ namespace UI.CreateTicket
             {
                 if (CheckTextField(txtSubject.Text) && CheckTextField(txtDescription.Text))
                     ticketService.CreateTicket(CreateTicket());
-
+                MessageBox.Show("Ticket is created");
+                Close();
             }
             catch (Exception exception) { MessageBox.Show(exception.Message); }
 

@@ -12,16 +12,15 @@ using System.Windows.Forms;
 
 namespace UI.EmployeeUI
 {
-    public partial class EmployeeUI : Form
+    public partial class EmployeeUIctl : UserControl
     {
         private EmployeeService _employeeService;
-        public EmployeeUI()
+        public EmployeeUIctl()
         {
             InitializeComponent();
             _employeeService = new EmployeeService();
             InitListView();
         }
-
         private void InitListView()
         {
             employeeListView.Items.Clear();
@@ -42,6 +41,26 @@ namespace UI.EmployeeUI
         private void addEmployeeBtn_Click(object sender, EventArgs e)
         {
             EmployeeAddUI.EmployeeEditUI employeeAddUI = new EmployeeAddUI.EmployeeEditUI();
+            employeeAddUI.ShowDialog();
+            if (!employeeAddUI.canceled)
+            {
+                InitListView();
+            }
+        }
+
+        private void editEmployeeBtn_Click(object sender, EventArgs e)
+        {
+            if (employeeListView.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select a Employee");
+                return;
+            }
+            if (employeeListView.SelectedItems.Count > 1)
+            {
+                MessageBox.Show("Please only select one employee");
+                return;
+            }
+            EmployeeAddUI.EmployeeEditUI employeeAddUI = new EmployeeAddUI.EmployeeEditUI((Employee)employeeListView.SelectedItems[0].Tag, true);
             employeeAddUI.ShowDialog();
             if (!employeeAddUI.canceled)
             {
@@ -75,26 +94,6 @@ namespace UI.EmployeeUI
                 {
                     MessageBox.Show("Something went wrong please try again later");
                 }
-            }
-        }
-
-        private void editEmployeeBtn_Click(object sender, EventArgs e)
-        {
-            if (employeeListView.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("Please select a Employee");
-                return;
-            }
-            if (employeeListView.SelectedItems.Count > 1)
-            {
-                MessageBox.Show("Please only select one employee");
-                return;
-            }
-            EmployeeAddUI.EmployeeEditUI employeeAddUI = new EmployeeAddUI.EmployeeEditUI((Employee)employeeListView.SelectedItems[0].Tag, true);
-            employeeAddUI.ShowDialog();
-            if (!employeeAddUI.canceled)
-            {
-                InitListView();
             }
         }
     }

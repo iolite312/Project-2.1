@@ -1,13 +1,13 @@
 ﻿namespace UI.TicketUI
 {
-    partial class TicketUI
+    partial class TicketUIctl
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,14 +20,15 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
+            ticketListView = new ListView();
             caseName = new ColumnHeader();
             type = new ColumnHeader();
             status = new ColumnHeader();
@@ -36,8 +37,18 @@
             handler = new ColumnHeader();
             employee = new ColumnHeader();
             deadline = new ColumnHeader();
-            ticketListView = new ListView();
             SuspendLayout();
+            // 
+            // ticketListView
+            // 
+            ticketListView.Columns.AddRange(new ColumnHeader[] { caseName, type, status, timestamp, priority, handler, employee, deadline });
+            ticketListView.Location = new Point(0, 0);
+            ticketListView.Name = "ticketListView";
+            ticketListView.Size = new Size(1084, 492);
+            ticketListView.TabIndex = 1;
+            ticketListView.UseCompatibleStateImageBehavior = false;
+            ticketListView.View = View.Details;
+            ticketListView.MouseDoubleClick += ticketListView_MouseDoubleClick;
             // 
             // caseName
             // 
@@ -79,32 +90,20 @@
             deadline.Text = "Deadline";
             deadline.Width = 160;
             // 
-            // ticketListView
+            // TicketUIctl
             // 
-            ticketListView.Columns.AddRange(new ColumnHeader[] { caseName, type, status, timestamp, priority, handler, employee, deadline });
-            ticketListView.Location = new Point(15, 30);
-            ticketListView.Margin = new Padding(4);
-            ticketListView.Name = "ticketListView";
-            ticketListView.Size = new Size(1446, 614);
-            ticketListView.TabIndex = 0;
-            ticketListView.UseCompatibleStateImageBehavior = false;
-            ticketListView.View = View.Details;
-            ticketListView.DoubleClick += ticketListView_DoubleClick;
-            // 
-            // TicketUI
-            // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1478, 691);
             Controls.Add(ticketListView);
-            Margin = new Padding(4, 4, 4, 4);
-            Name = "TicketUI";
-            Text = "TicketUI";
+            Margin = new Padding(2);
+            Name = "TicketUIctl";
+            Size = new Size(1106, 496);
             ResumeLayout(false);
         }
 
         #endregion
 
+        private ListView ticketListView;
         private ColumnHeader caseName;
         private ColumnHeader type;
         private ColumnHeader status;
@@ -113,6 +112,5 @@
         private ColumnHeader handler;
         private ColumnHeader employee;
         private ColumnHeader deadline;
-        private ListView ticketListView;
     }
 }
