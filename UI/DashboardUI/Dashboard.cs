@@ -44,9 +44,12 @@ namespace UI.DashboardUI
         }    
         private void showListBtn_Click(object sender, EventArgs e)
         {
-            TicketUI.TicketUI ticketUI = new TicketUI.TicketUI(_allTickets, _employee);
-            ticketUI.Show();
-            this.Hide();
+            subViewPanel.Visible = true;
+            subViewPanel.Controls.Clear();
+            TicketUI.TicketUIctl ticketUI = new TicketUI.TicketUIctl(_allTickets, _employee);
+            subViewPanel.Controls.Add(ticketUI);
+            this.Width = 1300;
+            this.Height = 900;
         }
         private int CalculateStatusTickets(List<Ticket> allTickets, ETicketStatus status)
         {

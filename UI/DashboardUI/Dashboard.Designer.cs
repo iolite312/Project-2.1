@@ -33,16 +33,17 @@
             openTicketsLabel = new Label();
             closedTicketsLabel = new Label();
             resolvedTicketsLabel = new Label();
+            subViewPanel = new Panel();
             SuspendLayout();
             // 
             // shwoListBtn
             // 
             shwoListBtn.BackColor = SystemColors.ActiveCaption;
             shwoListBtn.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            shwoListBtn.Location = new Point(367, 44);
+            shwoListBtn.Location = new Point(524, 73);
             shwoListBtn.Margin = new Padding(0);
             shwoListBtn.Name = "shwoListBtn";
-            shwoListBtn.Size = new Size(150, 50);
+            shwoListBtn.Size = new Size(214, 83);
             shwoListBtn.TabIndex = 0;
             shwoListBtn.Text = "SHOW LIST";
             shwoListBtn.UseVisualStyleBackColor = false;
@@ -61,7 +62,7 @@
             // openTicketsLabel
             // 
             openTicketsLabel.AutoSize = true;
-            openTicketsLabel.Location = new Point(60, 117);
+            openTicketsLabel.Location = new Point(70, 240);
             openTicketsLabel.Name = "openTicketsLabel";
             openTicketsLabel.Size = new Size(50, 15);
             openTicketsLabel.TabIndex = 2;
@@ -70,7 +71,7 @@
             // closedTicketsLabel
             // 
             closedTicketsLabel.AutoSize = true;
-            closedTicketsLabel.Location = new Point(360, 117);
+            closedTicketsLabel.Location = new Point(510, 240);
             closedTicketsLabel.Name = "closedTicketsLabel";
             closedTicketsLabel.Size = new Size(50, 15);
             closedTicketsLabel.TabIndex = 3;
@@ -79,20 +80,26 @@
             // resolvedTicketsLabel
             // 
             resolvedTicketsLabel.AutoSize = true;
-            resolvedTicketsLabel.Location = new Point(205, 117);
+            resolvedTicketsLabel.Location = new Point(275, 240);
             resolvedTicketsLabel.Name = "resolvedTicketsLabel";
             resolvedTicketsLabel.Size = new Size(50, 15);
             resolvedTicketsLabel.TabIndex = 3;
-            resolvedTicketsLabel.Text = "Resovled Tickets";
+            resolvedTicketsLabel.Text = "Resolved Tickets";
+            // 
+            // subViewPanel
+            // 
+            subViewPanel.Location = new Point(17, 185);
+            subViewPanel.Name = "subViewPanel";
+            subViewPanel.Size = new Size(1500, 700);
+            subViewPanel.TabIndex = 4;
+            subViewPanel.Visible = false;
             // 
             // Dashboard
             // 
-            OpenTicketPanel();
-            ClosedTicketsPanel();
-            ResolvedTicketPanel();
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(557, 350);
+            ClientSize = new Size(796, 583);
+            Controls.Add(subViewPanel);
             Controls.Add(closedTicketsLabel);
             Controls.Add(resolvedTicketsLabel);
             Controls.Add(openTicketsLabel);
@@ -102,6 +109,9 @@
             Text = "Dashboard";
             ResumeLayout(false);
             PerformLayout();
+            ClosedTicketsPanel();
+            OpenTicketPanel();
+            ResolvedTicketPanel();
         }
 
         #endregion
@@ -120,8 +130,8 @@
         {
             // Panel for past deadline incidents
             closedTicketsPanel = new Panel();
-            closedTicketsPanel.Location = new Point(150 + 150+30, 150);
-            closedTicketsPanel.Size = new Size(150, 150);
+            closedTicketsPanel.Location = new Point(200 + 250+ 20, 275);
+            closedTicketsPanel.Size = new Size(200, 200);
             closedTicketsPanel.Tag = closedTickets;
             closedTicketsPanel.ForeColor = Color.Orange;
             closedTicketsPanel.Paint += CircularProgressBarMaker;
@@ -132,8 +142,8 @@
         {
             // Panel for unresolved incidents
             openTicketPanel = new Panel();
-            openTicketPanel.Location = new Point(30, 150);
-            openTicketPanel.Size = new Size(150, 150);
+            openTicketPanel.Location = new Point(30, 275);
+            openTicketPanel.Size = new Size(200, 200);
             openTicketPanel.Tag = openTickets;
             openTicketPanel.ForeColor = Color.Red;
             openTicketPanel.Paint += CircularProgressBarMaker;
@@ -143,8 +153,8 @@
         {
             // Panel for unresolved incidents
             resolvedTicketsPanel = new Panel();
-            resolvedTicketsPanel.Location = new Point(180, 150);
-            resolvedTicketsPanel.Size = new Size(150, 150);
+            resolvedTicketsPanel.Location = new Point(250, 275);
+            resolvedTicketsPanel.Size = new Size(200, 200);
             resolvedTicketsPanel.Tag = resolvedTickets;
             resolvedTicketsPanel.ForeColor = Color.Green;
             resolvedTicketsPanel.Paint += CircularProgressBarMaker;
@@ -179,5 +189,7 @@
 
             g.DrawString(text, font, new SolidBrush(Color.Black), textX, textY);
         }
+
+        private Panel subViewPanel;
     }
 }
