@@ -42,8 +42,10 @@ namespace UI.DashboardUI
             resolvedTickets = CalculateStatusTickets(_allTickets, ETicketStatus.Resolved);
             closedTickets = CalculateStatusTickets(_allTickets, ETicketStatus.Closed);
             InitializeComponent();
-            employeeListBtn.Enabled = false;
-            employeeListBtn.Hide();
+            if (employee.Role == ERole.Employee)
+            {
+                employeeListBtn.Hide();
+            }
         }
 
         private void showListBtn_Click(object sender, EventArgs e)
