@@ -6,7 +6,7 @@ namespace UI.TicketEditUI
 {
     public partial class TicketEditUI : Form
     {
-        public bool canceled = false;
+        public bool canceled = true;
         private bool isEditing = false;
         private Ticket _ticket;
         public TicketEditUI(Ticket ticket)
@@ -93,6 +93,7 @@ namespace UI.TicketEditUI
             {
                 isEditing = true;
                 statusLbl.Text = "Editing Ticket";
+                canceled = false;
                 FlipVisibilty();
                 editTicketBtn.Text = "Confirm Edit";
                 cancelBtn.Text = "Cancel Edit";

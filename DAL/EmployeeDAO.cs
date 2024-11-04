@@ -94,7 +94,7 @@ namespace DAL
                 };
             }
 
-            GetTicketCollection().UpdateMany(ticketdef, pipelineDefinition);
+            var result = GetTicketCollection().UpdateMany(ticketdef, pipelineDefinition);
         }
 
         public async Task<bool> DeleteEmployee(string id)

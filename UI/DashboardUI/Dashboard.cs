@@ -88,6 +88,17 @@ namespace UI.DashboardUI
 
         private void ticketsListBtn_Click(object sender, EventArgs e)
         {
+            TicketService service = new TicketService();
+            if (_employee.Role == ERole.Employee)
+            {
+                _allTickets = service.GetEmployeeTickets(_employee.Id);
+                employeeListBtn.Enabled = false;
+                employeeListBtn.Hide();
+            }
+            else
+            {
+                _allTickets = service.GetTickets();
+            }
             subViewPanel.Visible = true;
             subViewPanel.Controls.Clear();
             TicketUI.TicketUIctl ticketUI = new TicketUI.TicketUIctl(_allTickets, _employee);
