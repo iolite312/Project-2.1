@@ -32,8 +32,6 @@ namespace UI.DashboardUI
             if (_employee.Role == ERole.Employee)
             {
                 _allTickets = service.GetEmployeeTickets(_employee.Id);
-                employeeListBtn.Enabled = false;
-                employeeListBtn.Hide();
             }
             else
             {
@@ -44,7 +42,10 @@ namespace UI.DashboardUI
             resolvedTickets = CalculateStatusTickets(_allTickets, ETicketStatus.Resolved);
             closedTickets = CalculateStatusTickets(_allTickets, ETicketStatus.Closed);
             InitializeComponent();
+            employeeListBtn.Enabled = false;
+            employeeListBtn.Hide();
         }
+
         private void showListBtn_Click(object sender, EventArgs e)
         {
             subViewPanel.Visible = true;
@@ -92,8 +93,6 @@ namespace UI.DashboardUI
             if (_employee.Role == ERole.Employee)
             {
                 _allTickets = service.GetEmployeeTickets(_employee.Id);
-                employeeListBtn.Enabled = false;
-                employeeListBtn.Hide();
             }
             else
             {
