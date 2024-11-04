@@ -43,12 +43,12 @@
             // 
             ticketListView.Columns.AddRange(new ColumnHeader[] { caseName, type, status, timestamp, priority, handler, employee, deadline });
             ticketListView.Location = new Point(0, 0);
-            ticketListView.Margin = new Padding(4);
             ticketListView.Name = "ticketListView";
-            ticketListView.Size = new Size(1135, 614);
+            ticketListView.Size = new Size(1084, 492);
             ticketListView.TabIndex = 1;
             ticketListView.UseCompatibleStateImageBehavior = false;
             ticketListView.View = View.Details;
+            ticketListView.MouseDoubleClick += ticketListView_MouseDoubleClick;
             // 
             // caseName
             // 
@@ -92,11 +92,12 @@
             // 
             // TicketUIctl
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(ticketListView);
+            Margin = new Padding(2);
             Name = "TicketUIctl";
-            Size = new Size(1135, 618);
+            Size = new Size(1106, 496);
             ResumeLayout(false);
         }
 

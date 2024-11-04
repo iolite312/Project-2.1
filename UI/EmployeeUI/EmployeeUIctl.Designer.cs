@@ -1,13 +1,13 @@
 ﻿namespace UI.EmployeeUI
 {
-    partial class EmployeeUI
+    partial class EmployeeUIctl
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,10 +20,10 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -34,18 +34,18 @@
             phoneNumber = new ColumnHeader();
             role = new ColumnHeader();
             department = new ColumnHeader();
-            addEmployeeBtn = new Button();
-            deleteEmployee = new Button();
             editEmployeeBtn = new Button();
+            deleteEmployee = new Button();
+            addEmployeeBtn = new Button();
             SuspendLayout();
             // 
             // employeeListView
             // 
             employeeListView.Columns.AddRange(new ColumnHeader[] { name, email, phoneNumber, role, department });
-            employeeListView.Location = new Point(12, 12);
+            employeeListView.Location = new Point(21, 36);
             employeeListView.Name = "employeeListView";
             employeeListView.Size = new Size(979, 529);
-            employeeListView.TabIndex = 0;
+            employeeListView.TabIndex = 4;
             employeeListView.UseCompatibleStateImageBehavior = false;
             employeeListView.View = View.Details;
             // 
@@ -74,47 +74,46 @@
             department.Text = "Department";
             department.Width = 160;
             // 
-            // addEmployeeBtn
-            // 
-            addEmployeeBtn.Location = new Point(1036, 12);
-            addEmployeeBtn.Name = "addEmployeeBtn";
-            addEmployeeBtn.Size = new Size(134, 29);
-            addEmployeeBtn.TabIndex = 1;
-            addEmployeeBtn.Text = "Add Employee";
-            addEmployeeBtn.UseVisualStyleBackColor = true;
-            addEmployeeBtn.Click += addEmployeeBtn_Click;
-            // 
-            // deleteEmployee
-            // 
-            deleteEmployee.Location = new Point(1036, 82);
-            deleteEmployee.Name = "deleteEmployee";
-            deleteEmployee.Size = new Size(134, 29);
-            deleteEmployee.TabIndex = 2;
-            deleteEmployee.Text = "Delete Employee";
-            deleteEmployee.UseVisualStyleBackColor = true;
-            deleteEmployee.Click += deleteEmployee_Click;
-            // 
             // editEmployeeBtn
             // 
-            editEmployeeBtn.Location = new Point(1036, 47);
+            editEmployeeBtn.Location = new Point(1045, 71);
             editEmployeeBtn.Name = "editEmployeeBtn";
             editEmployeeBtn.Size = new Size(134, 29);
-            editEmployeeBtn.TabIndex = 3;
+            editEmployeeBtn.TabIndex = 7;
             editEmployeeBtn.Text = "Edit Employee";
             editEmployeeBtn.UseVisualStyleBackColor = true;
             editEmployeeBtn.Click += editEmployeeBtn_Click;
             // 
-            // EmployeeUI
+            // deleteEmployee
+            // 
+            deleteEmployee.Location = new Point(1045, 106);
+            deleteEmployee.Name = "deleteEmployee";
+            deleteEmployee.Size = new Size(134, 29);
+            deleteEmployee.TabIndex = 6;
+            deleteEmployee.Text = "Delete Employee";
+            deleteEmployee.UseVisualStyleBackColor = true;
+            deleteEmployee.Click += deleteEmployee_Click;
+            // 
+            // addEmployeeBtn
+            // 
+            addEmployeeBtn.Location = new Point(1045, 36);
+            addEmployeeBtn.Name = "addEmployeeBtn";
+            addEmployeeBtn.Size = new Size(134, 29);
+            addEmployeeBtn.TabIndex = 5;
+            addEmployeeBtn.Text = "Add Employee";
+            addEmployeeBtn.UseVisualStyleBackColor = true;
+            addEmployeeBtn.Click += addEmployeeBtn_Click;
+            // 
+            // EmployeeUIctl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1182, 553);
+            Controls.Add(employeeListView);
             Controls.Add(editEmployeeBtn);
             Controls.Add(deleteEmployee);
             Controls.Add(addEmployeeBtn);
-            Controls.Add(employeeListView);
-            Name = "EmployeeUI";
-            Text = "EmployeeUI";
+            Name = "EmployeeUIctl";
+            Size = new Size(1200, 600);
             ResumeLayout(false);
         }
 
@@ -126,8 +125,8 @@
         private ColumnHeader phoneNumber;
         private ColumnHeader role;
         private ColumnHeader department;
-        private Button addEmployeeBtn;
-        private Button deleteEmployee;
         private Button editEmployeeBtn;
+        private Button deleteEmployee;
+        private Button addEmployeeBtn;
     }
 }

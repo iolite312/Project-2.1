@@ -39,7 +39,7 @@ namespace UI.TicketUI
             }
         }
 
-        private void ticketListView_DoubleClick(object sender, EventArgs e)
+        private void ticketListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (ticketListView.SelectedItems.Count == 0)
             {
@@ -58,6 +58,7 @@ namespace UI.TicketUI
                 updateAfterChange();
             }
         }
+
         private void updateAfterChange()
         {
             TicketService ticketService = new TicketService();
