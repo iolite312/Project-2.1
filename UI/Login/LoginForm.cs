@@ -128,7 +128,7 @@ namespace UI.Login
                 }
                 else { rememberMeService.DeleteFile(); }
             }
-            catch (Exception ex) { ShowError(ex.Message.ToString()); }
+            catch (Exception ex) {rememberMeService.DeleteFile(); ShowError(ex.Message.ToString());}
         }
 
 
