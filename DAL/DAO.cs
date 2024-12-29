@@ -13,7 +13,7 @@ namespace DAL
 
         public DAO()
         {
-            client = new MongoClient("mongodb+srv://713969:GardenGroup@gardengroup.l9fpj.mongodb.net/");
+            client = new MongoClient("<Put your own mongoDB instance url here>");
             db = client.GetDatabase("Project");
         }
         protected IMongoCollection<Employee> GetEmployeeCollection()
